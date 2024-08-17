@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 } */
+
+@font-face {
+  font-family: "SanTokki";
+  src: url("./fonts/HSSanTokki.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "JejuGothic";
+  src: url("./fonts/JejuGothic.ttf") format("truetype");
+}
