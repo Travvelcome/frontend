@@ -70,7 +70,11 @@ const MapPage = () => {
       >
         <IoIosArrowBack />
       </BackBtn>
-      <FilterBtn>
+      <FilterBtn
+        onClick={() => {
+          window.location.href = "/filter";
+        }}
+      >
         <FaFilter /> 관심사
       </FilterBtn>
       <BtnBox>

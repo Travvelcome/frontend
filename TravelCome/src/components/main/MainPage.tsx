@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MessageList from "./MessageList";
 import RecommendList from "./RecommendList";
 import { ReactComponent as Horse } from "../../assets/Horse.svg";
-import { ReactComponent as FreequencyIcon } from "../../assets/Freequency.svg";
+import { ReactComponent as FrequencyIcon } from "../../assets/Freequency.svg";
 import { ReactComponent as Arrow } from "../../assets/Arrow.svg";
 import { BiCurrentLocation } from "react-icons/bi";
 
@@ -111,9 +111,9 @@ const MainPage = () => {
         </RecommendListBox>
       </RecommendBox>
       <Advertise>광고</Advertise>
-      <FreequencyBox>
+      <FrequencyBox>
         <span id="icon">
-          <FreequencyIcon />
+          <FrequencyIcon />
         </span>
         <Score>
           1 <span>/ 20</span>
@@ -123,7 +123,7 @@ const MainPage = () => {
         </span>
         <Bar1></Bar1>
         <Bar2></Bar2>
-      </FreequencyBox>
+      </FrequencyBox>
     </Container>
   );
 };
@@ -254,7 +254,7 @@ const Advertise = styled.div`
   text-align: center;
   line-height: 90px;
 `;
-const FreequencyBox = styled.div`
+const FrequencyBox = styled.div`
   width: 350px;
   height: 60px;
   margin: 50px auto;
