@@ -5,6 +5,7 @@ import RecommendList from "./RecommendList";
 import { ReactComponent as Horse } from "../../assets/Horse.svg";
 import { ReactComponent as FreequencyIcon } from "../../assets/Freequency.svg";
 import { ReactComponent as Arrow } from "../../assets/Arrow.svg";
+import { BiCurrentLocation } from "react-icons/bi";
 
 declare global {
   interface Window {
@@ -12,6 +13,7 @@ declare global {
   }
 }
 const MainPage = () => {
+  /*
   useEffect(() => {
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     let options = {
@@ -22,6 +24,52 @@ const MainPage = () => {
 
     let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
   }, []);
+*/
+  const [map, setMap] = useState<any>();
+  const [marker, setMarker] = useState<any>();
+
+  // 1) 카카오맵 불러오기
+  useEffect(() => {
+    window.kakao.maps.load(() => {
+      const container = document.getElementById("map");
+      const options = {
+        center: new window.kakao.maps.LatLng(33.4996213, 126.5311884),
+        level: 6,
+      };
+
+      setMap(new window.kakao.maps.Map(container, options));
+      setMarker(new window.kakao.maps.Marker());
+    });
+  }, []);
+
+  // 2) 현재 위치 함수
+  const getCurrentPosBtn = () => {
+    navigator.geolocation.getCurrentPosition(
+      getPosSuccess,
+      () => alert("위치 정보를 가져오는데 실패했습니다."),
+      {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 27000,
+      }
+    );
+  };
+
+  // 3) 정상적으로 현재위치 가져올 경우 실행
+  const getPosSuccess = (pos: GeolocationPosition) => {
+    // 현재 위치(위도, 경도) 가져온다.
+    var currentPos = new window.kakao.maps.LatLng(
+      pos.coords.latitude, // 위도
+      pos.coords.longitude // 경도
+    );
+    // 지도를 이동 시킨다.
+    map.panTo(currentPos);
+
+    // 기존 마커를 제거하고 새로운 마커를 넣는다.
+    marker.setMap(null);
+    marker.setPosition(currentPos);
+    marker.setMap(map);
+  };
 
   return (
     <Container>
@@ -30,15 +78,18 @@ const MainPage = () => {
           민지님, <br />
           어디로 떠날까요?
         </Title>
-        <Freequency>
+        <Frequency>
           <span>
             <Horse />
           </span>
-        </Freequency>
+        </Frequency>
       </TitleBox>
       <MapBox>
         <Map id="map"></Map>
         <Button>발견하기</Button>
+        <Button2 onClick={getCurrentPosBtn}>
+          <BiCurrentLocation />
+        </Button2>
       </MapBox>
       <MessageBox>
         <MessageTitle>최근 대화</MessageTitle>
@@ -81,26 +132,25 @@ export default MainPage;
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px;
   padding-bottom: 70px;
 `;
 const TitleBox = styled.div`
   position: relative;
-  margin: 20px;
+  margin: 40px;
 `;
 const Title = styled.div`
   font-family: "SanTokki";
-  font-size: 30px;
-  line-height: 50px;
+  font-size: 24px;
+  line-height: 40px;
 `;
-const Freequency = styled.div`
+const Frequency = styled.div`
   background-color: #fdac01;
   border-radius: 50px;
   width: 60px;
   height: 60px;
   position: absolute;
   right: 0px;
-  top: 20px;
+  top: 10px;
   span {
     width: 60px;
     height: 60px;
@@ -110,15 +160,16 @@ const Freequency = styled.div`
   }
 `;
 const MapBox = styled.div`
-  width: 390px;
-  height: 320px;
+  width: 350px;
+  height: 280px;
   margin: 30px auto;
   border: 3px dashed #fdac01;
   position: relative;
+  border-radius: 15px;
 `;
 const Map = styled.div`
-  width: 370px;
-  height: 300px;
+  width: 330px;
+  height: 260px;
   margin: 10px auto;
 `;
 const Button = styled.div`
@@ -134,11 +185,27 @@ const Button = styled.div`
   border-radius: 50px;
   position: absolute;
   bottom: 30px;
-  left: 135px;
+  left: 115px;
   z-index: 999;
+`;
+const Button2 = styled.div`
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  line-height: 45px;
+  color: #fdac01;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  z-index: 999;
+  cursor: pointer;
 `;
 const MessageBox = styled.div`
   position: relative;
+  margin: 20px;
   margin-top: 50px;
 `;
 const MessageTitle = styled.div`
@@ -160,6 +227,7 @@ const MessageListBox = styled.div`
 `;
 const RecommendBox = styled.div`
   position: relative;
+  margin: 20px;
   margin-top: 50px;
 `;
 const RecommendTitle = styled.div`
