@@ -147,8 +147,8 @@ const BtnBox = styled.div`
   background-color: #e0e0e0;
   border-radius: 30px;
   position: absolute;
-  top: 690px;
-  left: 80px;
+  top: 750px;
+  left: 70px;
   z-index: 999;
   cursor: pointer;
 `;

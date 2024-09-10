@@ -137,11 +137,14 @@ const Container = styled.div`
 const TitleBox = styled.div`
   position: relative;
   margin: 40px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 `;
 const Title = styled.div`
   font-family: "SanTokki";
   font-size: 24px;
   line-height: 40px;
+  color: #ff6b00;
 `;
 const Frequency = styled.div`
   background-color: #fdac01;
@@ -162,8 +165,8 @@ const Frequency = styled.div`
 const MapBox = styled.div`
   width: 350px;
   height: 280px;
-  margin: 30px auto;
-  border: 3px dashed #fdac01;
+  margin: 0px auto;
+  border: 3px dashed #ff6b00;
   position: relative;
   border-radius: 15px;
 `;
@@ -171,6 +174,7 @@ const Map = styled.div`
   width: 330px;
   height: 260px;
   margin: 10px auto;
+  border-radius: 15px;
 `;
 const Button = styled.div`
   width: 130px;
@@ -206,7 +210,7 @@ const Button2 = styled.div`
 const MessageBox = styled.div`
   position: relative;
   margin: 20px;
-  margin-top: 50px;
+  margin-top: 40px;
 `;
 const MessageTitle = styled.div`
   font-family: "SanTokki";
@@ -228,7 +232,7 @@ const MessageListBox = styled.div`
 const RecommendBox = styled.div`
   position: relative;
   margin: 20px;
-  margin-top: 50px;
+  margin-top: 40px;
 `;
 const RecommendTitle = styled.div`
   font-family: "SanTokki";
