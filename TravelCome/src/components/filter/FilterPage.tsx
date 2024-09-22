@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { IoCloseOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 
 const FilterPage = () => {
   return (
@@ -11,7 +11,7 @@ const FilterPage = () => {
             window.location.href = "/map";
           }}
         >
-          <IoCloseOutline />
+          <IoClose />
         </BackBtn>
         <Title>관심사 수정</Title>
       </TitleBox>
@@ -61,7 +61,7 @@ const Container = styled.div`
   height: 100vh;
 `;
 const TitleBox = styled.div`
-  font-family: "JejuGothic";
+  font-family: "SanTokki";
   position: relative;
   padding: 25px;
 `;
@@ -69,7 +69,7 @@ const BackBtn = styled.div`
   width: 40px;
   height: 40px;
   font-size: 30px;
-  color: #ff6b00;
+  color: #474751;
   position: absolute;
   top: 20px;
   left: 25px;
@@ -78,9 +78,11 @@ const BackBtn = styled.div`
 const Title = styled.div`
   width: 120px;
   height: 25px;
+  line-height: 25px;
   font-size: 24px;
   color: #ff6b00;
   margin: 0 auto;
+  padding-left: 20px;
 `;
 const FilterBox = styled.div`
   font-family: "JejuGothic";

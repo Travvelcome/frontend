@@ -6,6 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FiMinus } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { IoSearchSharp } from "react-icons/io5";
+import { ReactComponent as Filter } from "../../assets/Filter.svg";
 
 declare global {
   interface Window {
@@ -75,7 +76,10 @@ const MapPage = () => {
           window.location.href = "/filter";
         }}
       >
-        <FaFilter /> 관심사
+        <span>
+          <Filter />
+        </span>{" "}
+        관심사
       </FilterBtn>
       <BtnBox>
         <LocationBtn onClick={getCurrentPosBtn}>
@@ -123,6 +127,9 @@ const FilterBtn = styled.div`
   top: 30px;
   right: 30px;
   z-index: 999;
+  span {
+    vertical-align: middle;
+  }
 `;
 const BackBtn = styled.div`
   width: 40px;
