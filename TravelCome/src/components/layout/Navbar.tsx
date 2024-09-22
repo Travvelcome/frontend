@@ -22,13 +22,13 @@ const Navbar = () => {
       >
         <HiOutlineLocationMarker />
       </Map>
-      <Message
+      <Chatting
         onClick={() => {
-          window.location.href = "/message";
+          window.location.href = "/chatting";
         }}
       >
         <HiOutlineChatAlt2 />
-      </Message>
+      </Chatting>
       <MyPage
         onClick={() => {
           window.location.href = "/mypage";
@@ -64,7 +64,7 @@ const Map = styled.div`
   color: #fdac01;
   cursor: pointer;
 `;
-const Message = styled.div`
+const Chatting = styled.div`
   font-size: 30px;
   line-height: 70px;
   color: #fdac01;
