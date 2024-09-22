@@ -6,6 +6,8 @@ import Navbar from "./components/layout/Navbar";
 import MapPage from "./components/map/MapPage";
 import FilterPage from "./components/filter/FilterPage";
 import SearchPage from "./components/search/SearchPage";
+import ChattingPage from "./components/chatting/ChattingPage";
+import ChattingHistoryPage from "./components/chatting/ChattingHistoryPage";
 
 function App() {
   const noLayout =
@@ -21,6 +23,8 @@ function App() {
             <Route path="/map" element={<MapPage />} />
             <Route path="/filter" element={<FilterPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/chatting" element={<ChattingPage />} />
+            <Route path="/chattinghistory" element={<ChattingHistoryPage />} />
           </Routes>
         </div>
       </BrowserRouter>
