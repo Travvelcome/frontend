@@ -4,7 +4,11 @@ import styled from "styled-components";
 const ChattingListComponent = () => {
   return (
     <>
-      <Container>
+      <Container
+        onClick={() => {
+          window.location.href = "/chattinghistory";
+        }}
+      >
         <Image
           id="roadview
           "
