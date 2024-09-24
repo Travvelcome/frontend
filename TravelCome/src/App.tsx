@@ -19,11 +19,11 @@ function App() {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <div className="App">
           <Routes>
-            <Route path="/frontend/" element={<MainPage />} />
-            <Route path="/" element={<MapPage />} />
+            <Route path="/frontend/main" element={<MainPage />} />
+            <Route path="/frontend/map" element={<MapPage />} />
             <Route path="/frontend/filter" element={<FilterPage />} />
             <Route path="/frontend/search" element={<SearchPage />} />
-            <Route path="/frontend/chatting" element={<ChattingPage />} />
+            <Route path="/frontend/" element={<ChattingPage />} />
             <Route
               path="/frontend/chattinghistory"
               element={<ChattingHistoryPage />}
