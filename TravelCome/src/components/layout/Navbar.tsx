@@ -17,7 +17,7 @@ const Navbar = () => {
       </Main>
       <Map
         onClick={() => {
-          window.location.href = "/frontend/map";
+          window.location.href = "/";
         }}
       >
         <HiOutlineLocationMarker />
