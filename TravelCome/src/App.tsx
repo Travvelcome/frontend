@@ -16,7 +16,7 @@ function App() {
     window.location.pathname === "/frontend/search";
   return (
     <>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <div className="App">
           <Routes>
             <Route path="/frontend/main" element={<MainPage />} />
