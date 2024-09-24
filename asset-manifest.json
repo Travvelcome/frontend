@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/frontend/static/css/main.a741b7e7.css",
+    "main.js": "/frontend/static/js/main.e3625a9c.js",
+    "static/js/453.ed3810f9.chunk.js": "/frontend/static/js/453.ed3810f9.chunk.js",
+    "static/media/JejuGothic.ttf": "/frontend/static/media/JejuGothic.5ab8dde3b67410fcb5f4.ttf",
+    "static/media/HSSanTokki.ttf": "/frontend/static/media/HSSanTokki.b6254f8942b481e41ee0.ttf",
+    "static/media/Culture.svg": "/frontend/static/media/Culture.365c38962aba23e61a019dcd9e3962b0.svg",
+    "static/media/Horse.svg": "/frontend/static/media/Horse.e1e2646f4557442b59e572c82c2de228.svg",
+    "static/media/Freequency.svg": "/frontend/static/media/Freequency.3ce42e5f1ec9a62a993d5a78348b4061.svg",
+    "static/media/All.svg": "/frontend/static/media/All.61f90ab2717e7b79e3787048a6969d85.svg",
+    "static/media/Mountain.svg": "/frontend/static/media/Mountain.ce9811ea12e0f031e1ad09dd9d1f03eb.svg",
+    "static/media/Knowledge.svg": "/frontend/static/media/Knowledge.45d899087f1ab0650ea49ebc565e138a.svg",
+    "static/media/Arrow.svg": "/frontend/static/media/Arrow.a1f3793ad1fc71a399f85f43ab3d8aaf.svg",
+    "static/media/Filter.svg": "/frontend/static/media/Filter.5b5264004815e5c10c6e9309de81f4bc.svg",
+    "index.html": "/frontend/index.html",
+    "static/media/CategoryDown.svg": "/frontend/static/media/CategoryDown.882e7f579ea03f0bd0f0dc05083b6342.svg",
+    "main.a741b7e7.css.map": "/frontend/static/css/main.a741b7e7.css.map",
+    "main.e3625a9c.js.map": "/frontend/static/js/main.e3625a9c.js.map",
+    "453.ed3810f9.chunk.js.map": "/frontend/static/js/453.ed3810f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a741b7e7.css",
+    "static/js/main.e3625a9c.js"
+  ]
+}
