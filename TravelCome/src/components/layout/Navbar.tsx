@@ -10,7 +10,7 @@ const Navbar = () => {
     <Container>
       <Main
         onClick={() => {
-          window.location.href = "/frontend/main";
+          window.location.href = "/frontend";
         }}
       >
         <HiOutlineHome />
@@ -24,7 +24,7 @@ const Navbar = () => {
       </Map>
       <Chatting
         onClick={() => {
-          window.location.href = "/frontend/";
+          window.location.href = "/frontend/chatting";
         }}
       >
         <HiOutlineChatAlt2 />

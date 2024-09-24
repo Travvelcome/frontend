@@ -163,7 +163,7 @@ const Frequency = styled.div`
   }
 `;
 const MapBox = styled.div`
-  width: 350px;
+  width: 85%;
   height: 280px;
   margin: 0px auto;
   border: 3px dashed #ff6b00;
@@ -171,7 +171,7 @@ const MapBox = styled.div`
   border-radius: 15px;
 `;
 const Map = styled.div`
-  width: 330px;
+  width: 95%;
   height: 260px;
   margin: 10px auto;
   border-radius: 15px;
@@ -189,7 +189,7 @@ const Button = styled.div`
   border-radius: 50px;
   position: absolute;
   bottom: 30px;
-  left: 115px;
+  left: 32%;
   z-index: 999;
 `;
 const Button2 = styled.div`
@@ -259,7 +259,7 @@ const Advertise = styled.div`
   line-height: 90px;
 `;
 const FrequencyBox = styled.div`
-  width: 350px;
+  width: 85%;
   height: 60px;
   margin: 50px auto;
   background-color: #fdac01;

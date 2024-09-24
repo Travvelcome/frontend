@@ -66,14 +66,14 @@ const MapPage = () => {
       <Map id="map"></Map>
       <BackBtn
         onClick={() => {
-          window.location.href = "/main";
+          window.location.href = "/frontend";
         }}
       >
         <IoIosArrowBack />
       </BackBtn>
       <FilterBtn
         onClick={() => {
-          window.location.href = "/filter";
+          window.location.href = "/frontend/filter";
         }}
       >
         <span>
@@ -93,7 +93,7 @@ const MapPage = () => {
         </MinusBtn>
         <SearchBtn
           onClick={() => {
-            window.location.href = "/search";
+            window.location.href = "/frontend/search";
           }}
         >
           <IoSearchSharp id="search" />
@@ -154,8 +154,8 @@ const BtnBox = styled.div`
   background-color: #e0e0e0;
   border-radius: 30px;
   position: absolute;
-  top: 750px;
-  left: 70px;
+  top: 85%;
+  left: 20%;
   z-index: 999;
   cursor: pointer;
 `;
