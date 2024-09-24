@@ -14,7 +14,6 @@ declare global {
 }
 const MainPage = () => {
   /*
-  /*
   useEffect(() => {
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     let options = {
@@ -25,7 +24,7 @@ const MainPage = () => {
 
     let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
   }, []);
-//
+*/
   const [map, setMap] = useState<any>();
   const [marker, setMarker] = useState<any>();
 
@@ -71,7 +70,7 @@ const MainPage = () => {
     marker.setPosition(currentPos);
     marker.setMap(map);
   };
-*/
+
   return (
     <Container>
       <TitleBox>
@@ -86,11 +85,11 @@ const MainPage = () => {
         </Frequency>
       </TitleBox>
       <MapBox>
-        {/*<Map id="map"></Map>
+        <Map id="map"></Map>
         <Button>발견하기</Button>
         <Button2 onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
-        </Button2>*/}
+        </Button2>
       </MapBox>
       <MessageBox>
         <MessageTitle>최근 대화</MessageTitle>
