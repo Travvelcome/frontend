@@ -108,10 +108,10 @@ const Title2 = styled.div`
 const RecentBox = styled.div`
   font-family: "JejuGothic";
   position: relative;
-  padding: 0 25px;
+  padding: 0 5%;
 `;
 const RecentListBox = styled.div`
-  padding: 0 10px;
+  padding: 0 8%;
   display: flex;
   justify-content: space-evenly;
   overflow: auto;

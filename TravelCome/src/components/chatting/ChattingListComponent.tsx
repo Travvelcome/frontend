@@ -45,7 +45,8 @@ const TextBox = styled.div`
   position: absolute;
   top: 10px;
   left: 80px;
-  width: 250px;
+  width: 70%;
+  //border: 1px solid #111;
 `;
 const BigText = styled.div`
   display: inline-block;
