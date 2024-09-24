@@ -19,9 +19,9 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/frontend/" element={<MainPage />} />
+            <Route path="/frontend/main" element={<MainPage />} />
             <Route path="/frontend/map" element={<MapPage />} />
-            <Route path="/frontend/filter" element={<FilterPage />} />
+            <Route path="/frontend/" element={<FilterPage />} />
             <Route path="/frontend/search" element={<SearchPage />} />
             <Route path="/frontend/chatting" element={<ChattingPage />} />
             <Route
