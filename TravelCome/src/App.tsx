@@ -11,21 +11,21 @@ import ChattingHistoryPage from "./components/chatting/ChattingHistoryPage";
 
 function App() {
   const noLayout =
-    window.location.pathname === "/frontend/map" ||
-    window.location.pathname === "/frontend/filter" ||
-    window.location.pathname === "/frontend/search";
+    window.location.pathname === "/frontend/map/" ||
+    window.location.pathname === "/frontend/filter/" ||
+    window.location.pathname === "/frontend/search/";
   return (
     <>
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/frontend/main" element={<MainPage />} />
-            <Route path="/frontend/map" element={<MapPage />} />
-            <Route path="/frontend/filter" element={<FilterPage />} />
-            <Route path="/frontend/search" element={<SearchPage />} />
+            <Route path="/frontend/main/" element={<MainPage />} />
+            <Route path="/frontend/map/" element={<MapPage />} />
+            <Route path="/frontend/filter/" element={<FilterPage />} />
+            <Route path="/frontend/search/" element={<SearchPage />} />
             <Route path="/frontend/" element={<ChattingPage />} />
             <Route
-              path="/frontend/chattinghistory"
+              path="/frontend/chattinghistory/"
               element={<ChattingHistoryPage />}
             />
           </Routes>
