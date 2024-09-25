@@ -85,12 +85,6 @@ const MapPage = () => {
         <LocationBtn onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
         </LocationBtn>
-        <PlusBtn>
-          <FiPlus />
-        </PlusBtn>
-        <MinusBtn>
-          <FiMinus />
-        </MinusBtn>
         <SearchBtn
           onClick={() => {
             window.location.href = "/frontend/search";
@@ -127,6 +121,7 @@ const FilterBtn = styled.div`
   top: 30px;
   right: 30px;
   z-index: 999;
+  cursor: pointer;
   span {
     vertical-align: middle;
   }
@@ -147,7 +142,7 @@ const BackBtn = styled.div`
   cursor: pointer;
 `;
 const BtnBox = styled.div`
-  width: 250px;
+  width: 180px;
   height: 65px;
   display: flex;
   justify-content: space-evenly;
@@ -155,24 +150,11 @@ const BtnBox = styled.div`
   border-radius: 30px;
   position: absolute;
   top: 85%;
-  left: 20%;
+  left: 30%;
   z-index: 999;
-  cursor: pointer;
 `;
 
 const LocationBtn = styled.div`
-  font-size: 30px;
-  line-height: 70px;
-  color: #fdac01;
-  cursor: pointer;
-`;
-const PlusBtn = styled.div`
-  font-size: 30px;
-  line-height: 70px;
-  color: #fdac01;
-  cursor: pointer;
-`;
-const MinusBtn = styled.div`
   font-size: 30px;
   line-height: 70px;
   color: #fdac01;

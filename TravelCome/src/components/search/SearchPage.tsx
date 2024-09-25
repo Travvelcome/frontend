@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 import { IoSearchSharp } from "react-icons/io5";
@@ -9,6 +10,8 @@ import { ReactComponent as Culture } from "../../assets/Culture.svg";
 import { ReactComponent as Down } from "../../assets/CategoryDown.svg";
 import ListComponent from "./SearchListComponent";
 const SearchPage = () => {
+  const navigate = useNavigate();
+
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -16,12 +19,13 @@ const SearchPage = () => {
     const keyword = e.target.value;
     setSearchKeyword(keyword);
   };
+
   return (
     <Container>
       <TitleBox>
         <BackBtn
           onClick={() => {
-            window.location.href = "/map";
+            navigate(-1);
           }}
         >
           <IoClose />
@@ -37,7 +41,7 @@ const SearchPage = () => {
             value={searchKeyword}
             onChange={handleInputChange}
           />
-          <div id="delete-icon">
+          <div id="search-icon">
             <IoSearchSharp size="23" />
           </div>
         </SearchBar>
@@ -116,6 +120,7 @@ const BackBtn = styled.div`
   top: 20px;
   left: 25px;
   z-index: 999;
+  cursor: pointer;
 `;
 const Title = styled.div`
   width: 120px;
@@ -141,7 +146,7 @@ const SearchBar = styled.div`
   border-radius: 30px;
   border: 1px solid #ff6b00;
 
-  #delete-icon {
+  #search-icon {
     color: #111;
     position: absolute;
     top: 5px;
@@ -179,6 +184,7 @@ const Category = styled.div`
   background-color: rgb(224, 224, 224, 0.5);
   font-size: 13px;
   text-align: center;
+  cursor: pointer;
   color: #000;
   div {
     margin-top: 5px;
@@ -201,6 +207,7 @@ const CategoryList = styled.div`
   font-size: 24px;
   span {
     vertical-align: middle;
+    cursor: pointer;
   }
 `;
 const ListBox = styled.div`

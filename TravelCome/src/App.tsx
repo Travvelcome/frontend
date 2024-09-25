@@ -8,6 +8,8 @@ import FilterPage from "./components/filter/FilterPage";
 import SearchPage from "./components/search/SearchPage";
 import ChattingPage from "./components/chatting/ChattingPage";
 import ChattingHistoryPage from "./components/chatting/ChattingHistoryPage";
+import MyPage from "./components/my/MyPage";
+import LeavePage from "./components/my/LeavePage";
 
 function App() {
   const noLayout =
@@ -28,6 +30,8 @@ function App() {
               path="/frontend/chattinghistory"
               element={<ChattingHistoryPage />}
             />
+            <Route path="/frontend/my" element={<MyPage />} />
+            <Route path="/frontend/my/leave" element={<LeavePage />} />
           </Routes>
         </div>
       </BrowserRouter>
