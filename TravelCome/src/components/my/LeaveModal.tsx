@@ -76,11 +76,15 @@ const Message = styled.div`
 const PasswordInput = styled.input`
   width: 250px;
   height: 35px;
-  font-family: "JejuGothic";
-  color: #87888d;
   border-radius: 10px;
   margin-bottom: 30px;
   text-align: left;
+
+  &::placeholder {
+    font-family: "JejuGothic", sans-serif;
+    color: #888;
+    opacity: 1;
+  }
 `;
 const Leave = styled.button`
   width: 137px;
