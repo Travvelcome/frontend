@@ -29,6 +29,7 @@ const Container = styled.div`
   height: 240px;
   margin: 10px 10px;
   display: inline-block;
+  cursor: pointer;
 `;
 const Image = styled.div`
   background-color: #999;
@@ -58,7 +59,7 @@ const DesciptionBox = styled.div`
 `;
 const Name = styled.div`
   font-family: "Santokki";
-  font-size: 20px;
+  font-size: 16px;
 `;
 const Minute = styled.div`
   font-family: "JejuGothic";

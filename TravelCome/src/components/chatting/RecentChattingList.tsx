@@ -19,6 +19,7 @@ const Container = styled.div`
   height: 120px;
   margin: 10px -10px;
   display: inline-block;
+  cursor: pointer;
 `;
 const Image = styled.div`
   background-color: #d9d9d9;

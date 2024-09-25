@@ -77,6 +77,7 @@ const TitleBox = styled.div`
   padding: 25px;
   span {
     vertical-align: middle;
+    cursor: pointer;
   }
   //border: 1px solid #111;
 `;

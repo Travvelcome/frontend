@@ -13,9 +13,10 @@ const Container = styled.div`
   line-height: 30px;
   text-align: center;
   font-family: "JejuGothic";
-  font-size: 17px;
+  font-size: 15px;
   color: #fff;
   background-color: #999;
   margin: 0 10px;
   display: inline-block;
+  cursor: pointer;
 `;

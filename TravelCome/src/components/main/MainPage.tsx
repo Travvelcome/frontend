@@ -86,14 +86,16 @@ const MainPage = () => {
       </TitleBox>
       <MapBox>
         <Map id="map"></Map>
-        <Button>발견하기</Button>
-        <Button2 onClick={getCurrentPosBtn}>
+        <FindButton>발견하기</FindButton>
+        <LocationButton onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
-        </Button2>
+        </LocationButton>
       </MapBox>
       <MessageBox>
-        <MessageTitle>최근 대화</MessageTitle>
-        <More1>더보기</More1>
+        <Title2>
+          <div></div>최근 대화
+        </Title2>
+        <More>더보기</More>
         <MessageListBox>
           <MessageList />
           <MessageList />
@@ -102,8 +104,10 @@ const MainPage = () => {
         </MessageListBox>
       </MessageBox>
       <RecommendBox>
-        <RecommendTitle>민지님만을 위한 추천</RecommendTitle>
-        <More2>더보기</More2>
+        <Title2>
+          <div></div>민지님만을 위한 추천
+        </Title2>
+        <More>더보기</More>
         <RecommendListBox>
           <RecommendList />
           <RecommendList />
@@ -176,7 +180,7 @@ const Map = styled.div`
   margin: 10px auto;
   border-radius: 15px;
 `;
-const Button = styled.div`
+const FindButton = styled.div`
   width: 130px;
   height: 40px;
   line-height: 40px;
@@ -191,8 +195,9 @@ const Button = styled.div`
   bottom: 30px;
   left: 32%;
   z-index: 999;
+  cursor: pointer;
 `;
-const Button2 = styled.div`
+const LocationButton = styled.div`
   width: 40px;
   height: 40px;
   font-size: 30px;
@@ -212,15 +217,28 @@ const MessageBox = styled.div`
   margin: 20px;
   margin-top: 40px;
 `;
-const MessageTitle = styled.div`
+const Title2 = styled.div`
   font-family: "SanTokki";
-  font-size: 20px;
+  font-size: 18px;
+  div {
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    border-radius: 50%;
+    //border: 2px dashed #fdac01;
+    background-color: #fdac01;
+    z-index: -999;
+  }
 `;
-const More1 = styled.div`
+const More = styled.div`
   font-family: "JejuGothic";
+  font-size: 15px;
   position: absolute;
   right: 5px;
   top: 5px;
+  cursor: pointer;
 `;
 const MessageListBox = styled.div`
   margin-top: 10px;
@@ -233,16 +251,6 @@ const RecommendBox = styled.div`
   position: relative;
   margin: 20px;
   margin-top: 40px;
-`;
-const RecommendTitle = styled.div`
-  font-family: "SanTokki";
-  font-size: 20px;
-`;
-const More2 = styled.div`
-  font-family: "JejuGothic";
-  position: absolute;
-  right: 5px;
-  top: 5px;
 `;
 const RecommendListBox = styled.div`
   margin-top: 10px;
@@ -259,9 +267,10 @@ const Advertise = styled.div`
   line-height: 90px;
 `;
 const FrequencyBox = styled.div`
-  width: 85%;
+  width: 87%;
   height: 60px;
-  margin: 50px auto;
+  margin: 0px auto;
+  margin-bottom: 30px;
   background-color: #fdac01;
   border-radius: 10px;
   position: relative;
@@ -303,7 +312,7 @@ const Bar1 = styled.div`
   opacity: 0.5;
 `;
 const Bar2 = styled.div`
-  width: 20px;
+  width: 11px;
   height: 13px;
   border-radius: 10px;
   position: absolute;

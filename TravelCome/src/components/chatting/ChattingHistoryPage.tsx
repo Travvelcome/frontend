@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IoClose } from "react-icons/io5";
 import { IoSearchSharp } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 
 const ChattingHistoryPage = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <TitleBox>
         <BackBtn
           onClick={() => {
-            window.location.href = "/chatting";
+            navigate(-1);
           }}
         >
           <IoIosArrowBack />
@@ -75,6 +77,7 @@ const BackBtn = styled.div`
   top: 20px;
   left: 25px;
   z-index: 999;
+  cursor: pointer;
 `;
 const Title = styled.div`
   width: 120px;
@@ -151,6 +154,7 @@ const SearchBtn = styled.div`
   position: fixed;
   bottom: 100px;
   right: 20px;
+  cursor: pointer;
 
   #search-icon {
     color: #111;
