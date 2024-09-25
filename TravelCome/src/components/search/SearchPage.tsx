@@ -140,7 +140,7 @@ const SearchBox = styled.div`
 const SearchBar = styled.div`
   font-family: "JejuGothic";
   position: relative;
-  width: 328px;
+  width: 95%;
   height: 44px;
   margin: 0 auto;
   border-radius: 30px;
