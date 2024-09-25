@@ -31,7 +31,7 @@ const Navbar = () => {
       </Chatting>
       <MyPage
         onClick={() => {
-          window.location.href = "/frontend/mypage";
+          window.location.href = "/frontend/my";
         }}
       >
         <HiOutlineUserCircle />
