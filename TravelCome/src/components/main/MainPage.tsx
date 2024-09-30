@@ -6,6 +6,7 @@ import { ReactComponent as Horse } from "../../assets/Horse.svg";
 import { ReactComponent as FrequencyIcon } from "../../assets/Freequency.svg";
 import { ReactComponent as Arrow } from "../../assets/Arrow.svg";
 import { BiCurrentLocation } from "react-icons/bi";
+import { getLandmarkFind } from "../../api/Landmark";
 
 declare global {
   interface Window {
@@ -71,6 +72,19 @@ const MainPage = () => {
     marker.setMap(map);
   };
 
+  // 랜드마크 발견하기 연동
+  const [landmarkList, setLandmarkList] = useState([]);
+
+  const handleFindButton = async () => {
+    try {
+      const response = await getLandmarkFind();
+      setLandmarkList(response);
+      console.log("랜드마크 발견하기 :", landmarkList);
+    } catch (error) {
+      console.error("랜드마크 발견하기 오류:", error);
+    }
+  };
+
   return (
     <Container>
       <TitleBox>
@@ -86,7 +100,7 @@ const MainPage = () => {
       </TitleBox>
       <MapBox>
         <Map id="map"></Map>
-        <FindButton>발견하기</FindButton>
+        <FindButton onClick={handleFindButton}>발견하기</FindButton>
         <LocationButton onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
         </LocationButton>

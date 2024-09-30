@@ -10,12 +10,18 @@ import ChattingPage from "./components/chatting/ChattingPage";
 import ChattingHistoryPage from "./components/chatting/ChattingHistoryPage";
 import MyPage from "./components/my/MyPage";
 import LeavePage from "./components/my/LeavePage";
+import TalkingMainPage from "./components/talking/TalkingMainPage";
+import TalkingChattingPage from "./components/talking/TalkingChattingPage";
+import TalkingVoicePage from "./components/talking/TalkingVoicePage";
 
 function App() {
   const noLayout =
     window.location.pathname === "/frontend/map" ||
     window.location.pathname === "/frontend/filter" ||
-    window.location.pathname === "/frontend/search";
+    window.location.pathname === "/frontend/search" ||
+    window.location.pathname === "/frontend/talking" ||
+    window.location.pathname === "/frontend/talking/chatting" ||
+    window.location.pathname === "/frontend/talking/voice";
   return (
     <>
       <BrowserRouter>
@@ -32,6 +38,15 @@ function App() {
             />
             <Route path="/frontend/my" element={<MyPage />} />
             <Route path="/frontend/my/leave" element={<LeavePage />} />
+            <Route path="/frontend/talking" element={<TalkingMainPage />} />
+            <Route
+              path="/frontend/talking/chatting"
+              element={<TalkingChattingPage />}
+            />
+            <Route
+              path="/frontend/talking/voice"
+              element={<TalkingVoicePage />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
