@@ -1,4 +1,4 @@
-const baseURL = "https://ec2-52-78-198-2.ap-northeast-2.compute.amazonaws.com";
+const baseURL = "https://52.78.198.2.nip.io";
 
 const baseHeaders = {
   "Content-Type": "application/json",
