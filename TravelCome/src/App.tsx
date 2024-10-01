@@ -13,6 +13,9 @@ import LeavePage from "./components/my/LeavePage";
 import TalkingMainPage from "./components/talking/TalkingMainPage";
 import TalkingChattingPage from "./components/talking/TalkingChattingPage";
 import TalkingVoicePage from "./components/talking/TalkingVoicePage";
+import OnboardingPage from "./components/onboarding/OnboardingPage";
+import Kakao from "./components/signup/Kakao";
+import LandingFilterPage from "./components/filter/LandingFilterPage";
 
 function App() {
   const noLayout =
@@ -21,12 +24,18 @@ function App() {
     window.location.pathname === "/frontend/search" ||
     window.location.pathname === "/frontend/talking" ||
     window.location.pathname === "/frontend/talking/chatting" ||
-    window.location.pathname === "/frontend/talking/voice";
+    window.location.pathname === "/frontend/talking/voice" ||
+    window.location.pathname === "/frontend/onboarding" ||
+    window.location.pathname === "/frontend/landing" ||
+    window.location.pathname === "/frontend/callback";
   return (
     <>
       <BrowserRouter>
         <div className="App">
           <Routes>
+            <Route path="/frontend/onboarding" element={<OnboardingPage />} />
+            <Route path="/frontend/landing" element={<LandingFilterPage />} />
+            <Route path="/frontend/callback" element={<Kakao />} />
             <Route path="/frontend" element={<MainPage />} />
             <Route path="/frontend/map" element={<MapPage />} />
             <Route path="/frontend/filter" element={<FilterPage />} />
