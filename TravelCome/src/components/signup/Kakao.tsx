@@ -18,7 +18,7 @@ const Kakao = () => {
       //window.location.href = "/frontend/onboarding";
     }
   };
-  //kakaoLogin();
+  kakaoLogin();
 
   return (
     <>
