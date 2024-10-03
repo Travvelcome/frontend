@@ -5,8 +5,8 @@ import { ReactComponent as OnBoardingDot1 } from "../../assets/OnboardingDot1.sv
 
 const Onboarding1 = () => {
   const client_id = "03a20e0df8d91e05664ddf8d209bc596";
-  const redirect_uri = "http://localhost:8080/callback";
-  //const redirect_uri = "https://travvelcome.github.io/frontend/callback";
+  //const redirect_uri = "http://localhost:8080/callback";
+  const redirect_uri = "https://travvelcome.github.io/frontend/callback";
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 
   const handleLogin = () => {
