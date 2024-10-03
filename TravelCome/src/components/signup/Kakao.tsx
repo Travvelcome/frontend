@@ -13,9 +13,9 @@ const Kakao = () => {
 
       localStorage.setItem("name", response.nickname);
       localStorage.setItem("email", response.email);
-      window.location.href = "/frontend";
+      //window.location.href = "/frontend";
     } else {
-      window.location.href = "/frontend/onboarding";
+      //window.location.href = "/frontend/onboarding";
     }
   };
   kakaoLogin();
