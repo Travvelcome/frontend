@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ReactComponent as OnBoarding4 } from "../../assets/Onboarding4.svg";
-import { ReactComponent as OnBoardingDot4 } from "../../assets/OnboardingDot4.svg";
+import { ReactComponent as OnBoarding4 } from "../../assets/onboarding/Onboarding4.svg";
+import { ReactComponent as OnBoardingDot4 } from "../../assets/onboarding/OnboardingDot4.svg";
 
 const Onboarding = () => {
   const client_id = "03a20e0df8d91e05664ddf8d209bc596";
