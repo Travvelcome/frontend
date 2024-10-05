@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoSearchSharp } from "react-icons/io5";
-import { ReactComponent as Down } from "../../assets/CategoryDown.svg";
+import { ReactComponent as Down } from "../../assets/common/CategoryDown.svg";
 import ListComponent from "./ChattingListComponent";
 import RecentChattingList from "./RecentChattingList";
 

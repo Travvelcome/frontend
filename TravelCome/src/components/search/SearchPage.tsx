@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 import { IoSearchSharp } from "react-icons/io5";
-import { ReactComponent as All } from "../../assets/All.svg";
-import { ReactComponent as Mountain } from "../../assets/Mountain.svg";
-import { ReactComponent as Knowledge } from "../../assets/Knowledge.svg";
-import { ReactComponent as Culture } from "../../assets/Culture.svg";
-import { ReactComponent as Down } from "../../assets/CategoryDown.svg";
+import { ReactComponent as All } from "../../assets/search/All.svg";
+import { ReactComponent as Mountain } from "../../assets/search/Mountain.svg";
+import { ReactComponent as Knowledge } from "../../assets/search/Knowledge.svg";
+import { ReactComponent as Culture } from "../../assets/search/Culture.svg";
+import { ReactComponent as Down } from "../../assets/common/CategoryDown.svg";
 import ListComponent from "./SearchListComponent";
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -115,7 +115,7 @@ const BackBtn = styled.div`
   width: 40px;
   height: 40px;
   font-size: 30px;
-  color: #474751;
+  color: #ff6b00;
   position: absolute;
   top: 20px;
   left: 25px;
@@ -129,7 +129,7 @@ const Title = styled.div`
   font-size: 24px;
   color: #ff6b00;
   margin: 0px auto;
-  padding-left: 20px;
+  text-align: center;
 `;
 const SearchBox = styled.div`
   font-family: "JejuGothic";

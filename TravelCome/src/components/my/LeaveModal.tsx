@@ -56,7 +56,7 @@ const Box = styled.div`
   font-family: "JejuGothic";
   background-color: #fff;
   width: 300px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid black;
   position: relative;
   border: none;

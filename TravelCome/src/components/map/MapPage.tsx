@@ -6,7 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FiMinus } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { IoSearchSharp } from "react-icons/io5";
-import { ReactComponent as Filter } from "../../assets/Filter.svg";
+import { ReactComponent as Filter } from "../../assets/map/Filter.svg";
 
 declare global {
   interface Window {

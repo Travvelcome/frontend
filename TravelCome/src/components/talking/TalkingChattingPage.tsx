@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RiHeadphoneFill } from "react-icons/ri";
 import { IoIosArrowBack } from "react-icons/io";
+import QuestionList from "./TalkingQuestionList2";
 
 const TalkingChattingPage = () => {
   const navigate = useNavigate();
@@ -34,7 +35,13 @@ const TalkingChattingPage = () => {
         <hr />
       </TitleBox>
       <ChattingBox></ChattingBox>
-      <QuestionBox></QuestionBox>
+      <QuestionBox>
+        <QuestionList />
+        <QuestionList />
+        <QuestionList />
+        <QuestionList />
+        <QuestionList />
+      </QuestionBox>
       <SearchBox>
         <SearchBar>
           <SearchInput
@@ -46,7 +53,12 @@ const TalkingChattingPage = () => {
             onChange={handleInputChange}
           />
         </SearchBar>
-        <div id="voice-icon">
+        <div
+          id="voice-icon"
+          onClick={() => {
+            window.location.href = "/frontend/talking/voice";
+          }}
+        >
           <RiHeadphoneFill size="30" />
         </div>
       </SearchBox>
@@ -75,7 +87,6 @@ const TitleBox = styled.div`
   position: relative;
   padding: 25px;
   padding-bottom: 0px;
-  //border: 1px solid #000;
 `;
 const BackBtn = styled.div`
   width: 40px;
@@ -95,7 +106,7 @@ const Title = styled.div`
   font-size: 28px;
   color: #ff6b00;
   margin: 0px auto;
-  padding-left: 50px;
+  text-align: center;
   padding-bottom: 10px;
 `;
 const ChattingBox = styled.div`
@@ -148,11 +159,11 @@ const Me = styled.div`
 `;
 const QuestionBox = styled.div`
   width: 100%;
-  height: 100px;
   font-family: "JejuGothic";
   position: absolute;
-  bottom: 85px;
-  border: 1px solid #111;
+  bottom: 90px;
+  overflow: auto;
+  white-space: nowrap;
 `;
 const SearchBox = styled.div`
   font-family: "JejuGothic";
@@ -183,11 +194,12 @@ const SearchBar = styled.div`
   display: inline-block;
 `;
 const SearchInput = styled.input`
+  font-family: "JejuGothic";
   width: 250px;
   height: 40px;
   border: none;
   margin-left: 20px;
-  font-size: 20px;
+  font-size: 15px;
   color: #333;
   &:focus {
     outline: none;

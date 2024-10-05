@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ReactComponent as FrequencyIcon } from "../../assets/Freequency.svg";
-import { ReactComponent as Arrow } from "../../assets/Arrow.svg";
+import { ReactComponent as FrequencyIcon } from "../../assets/common/Stamp.svg";
+import { ReactComponent as Arrow } from "../../assets/common/Arrow.svg";
 
 const MyPage = () => {
   return (

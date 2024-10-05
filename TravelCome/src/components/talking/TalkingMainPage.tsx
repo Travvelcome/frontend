@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IoSearchSharp } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
-import { ReactComponent as TalkingBtn } from "../../assets/TalkingBtn.svg";
-import RecommendList from "./TalkingRecommendList";
+import { ReactComponent as TalkingBtn } from "../../assets/talking/TalkingBtn.svg";
+import QuestionList from "./TalkingQuestionList1";
 
 const TalkingMainPage = () => {
   const navigate = useNavigate();
@@ -47,15 +46,15 @@ const TalkingMainPage = () => {
           <Category>🐉 신화 / 전통</Category>
         </InfoCategoryBox>
       </InfoBox>
-      <RecommendBox>
-        <RecommendTitle>민지님의 취향 주제</RecommendTitle>
-        <RecommendListBox>
-          <RecommendList />
-          <RecommendList />
-          <RecommendList />
-          <RecommendList />
-        </RecommendListBox>
-      </RecommendBox>
+      <QuestionBox>
+        <QuestionTitle>민지님의 취향 주제</QuestionTitle>
+        <QuestionListBox>
+          <QuestionList />
+          <QuestionList />
+          <QuestionList />
+          <QuestionList />
+        </QuestionListBox>
+      </QuestionBox>
     </Container>
   );
 };
@@ -75,7 +74,7 @@ const BackBtn = styled.div`
   width: 40px;
   height: 40px;
   font-size: 30px;
-  color: #474751;
+  color: #ff6b00;
   position: absolute;
   top: 20px;
   left: 25px;
@@ -90,6 +89,7 @@ const Title = styled.div`
   color: #ff6b00;
   margin: 0px auto;
   padding-bottom: 10px;
+  text-align: center;
 `;
 const ImageBox = styled.div`
   width: 100vw;
@@ -153,19 +153,19 @@ const Category = styled.span`
   display: inline-block;
 `;
 
-const RecommendBox = styled.div`
+const QuestionBox = styled.div`
   font-family: "JejuGothic";
   position: relative;
   padding: 25px;
   padding-bottom: 0px;
   //border: 1px solid #000;
 `;
-const RecommendTitle = styled.div`
+const QuestionTitle = styled.div`
   font-family: "SanTokki";
   font-size: 18px;
   margin: 10px 0;
 `;
-const RecommendListBox = styled.div`
+const QuestionListBox = styled.div`
   width: 100%;
   overflow: auto;
   white-space: nowrap;

@@ -72,7 +72,7 @@ const BackBtn = styled.div`
   width: 40px;
   height: 40px;
   font-size: 30px;
-  color: #474751;
+  color: #ff6b00;
   position: absolute;
   top: 20px;
   left: 25px;
@@ -86,7 +86,7 @@ const Title = styled.div`
   font-size: 24px;
   color: #ff6b00;
   margin: 0 auto;
-  padding-left: 20px;
+  text-align: center;
 `;
 const FilterBox = styled.div`
   font-family: "JejuGothic";
