@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const RecommendList = () => {
+const TalkingQuestionList1 = () => {
   return (
     <RecommendBox>
       <Title>용두암이 어떻게 만들어졌는지</Title>
@@ -16,7 +16,7 @@ const RecommendList = () => {
     </RecommendBox>
   );
 };
-export default RecommendList;
+export default TalkingQuestionList1;
 
 const RecommendBox = styled.div`
   white-space: normal;

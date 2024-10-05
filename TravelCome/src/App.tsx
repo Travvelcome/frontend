@@ -16,6 +16,7 @@ import TalkingVoicePage from "./components/talking/TalkingVoicePage";
 import OnboardingPage from "./components/onboarding/OnboardingPage";
 import Kakao from "./components/signup/Kakao";
 import LandingFilterPage from "./components/filter/LandingFilterPage";
+import StampPage from "./components/stamp/StampPage";
 
 function App() {
   const noLayout =
@@ -56,6 +57,7 @@ function App() {
               path="/frontend/talking/voice"
               element={<TalkingVoicePage />}
             />
+            <Route path="/frontend/stamp" element={<StampPage />} />
           </Routes>
         </div>
       </BrowserRouter>
