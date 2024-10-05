@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import LandingComponent from "./LandingComponent";
 
 const LandingFilterPage = () => {
+  const navigate = useNavigate();
+
   const handleLogin = () => {
     window.location.href = "";
   };
@@ -9,6 +14,13 @@ const LandingFilterPage = () => {
   return (
     <Container>
       <MessageBox>
+        <BackBtn
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <IoIosArrowBack />
+        </BackBtn>
         <BigMessage>관심 있는 주제를 골라보아요!</BigMessage>
         <SmallMessage>
           관심있는 주제를 3개 이상 선택하시면
@@ -18,33 +30,22 @@ const LandingFilterPage = () => {
       </MessageBox>
       <FilterBox>
         <CategoryBox>
-          <Filter>
-            ⛰️ <br /> 산 / 오름
-          </Filter>
-          <Filter>
-            ⛰️ <br /> 산 / 오름
-          </Filter>
-          <Filter>
-            ⛰️ <br /> 산 / 오름
-          </Filter>
-          <Filter></Filter>
-          <Filter></Filter>
+          <LandingComponent />
+          <LandingComponent />
+          <LandingComponent />
+          <LandingComponent />
         </CategoryBox>
         <CategoryBox>
-          <Filter>
-            ⛰️ <br /> 산 / 오름
-          </Filter>
-          <Filter></Filter>
-          <Filter></Filter>
-          <Filter></Filter>
-          <Filter></Filter>
+          <LandingComponent />
+          <LandingComponent />
+          <LandingComponent />
+          <LandingComponent />
         </CategoryBox>
         <CategoryBox>
-          <Filter></Filter>
-          <Filter></Filter>
-          <Filter></Filter>
-          <Filter></Filter>
-          <Filter></Filter>
+          <LandingComponent />
+          <LandingComponent />
+          <LandingComponent />
+          <LandingComponent />
         </CategoryBox>
       </FilterBox>
       <CompleteBox>
@@ -68,6 +69,17 @@ const MessageBox = styled.div`
   text-align: center;
   margin: 0 auto;
 `;
+const BackBtn = styled.div`
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  color: #474751;
+  position: absolute;
+  top: 20px;
+  left: 15px;
+  z-index: 999;
+  cursor: pointer;
+`;
 const BigMessage = styled.div`
   font-family: "SanTokki";
   font-size: 28px;
@@ -82,7 +94,8 @@ const SmallMessage = styled.div`
 `;
 const FilterBox = styled.div`
   width: 100vw;
-  border: 1px solid #111;
+  margin: 50px 0;
+  //border: 1px solid #111;
 `;
 const CategoryBox = styled.div`
   width: 100vw;
@@ -90,24 +103,11 @@ const CategoryBox = styled.div`
   margin: 35px auto;
   overflow: auto;
   white-space: nowrap;
-  border: 1px solid #111;
+  //border: 1px solid #111;
 
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-const Filter = styled.div`
-  width: 110px;
-  height: 110px;
-  background-color: #fff;
-  border-radius: 50%;
-  display: inline-block;
-  margin: 0 15px;
-  line-height: 16px;
-  margin-top: 0px;
-  text-align: center;
-  font-family: "JejuGothic";
-  font-size: 16px;
 `;
 const CompleteBox = styled.div`
   width: 100vw;
