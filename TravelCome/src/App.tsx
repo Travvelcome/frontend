@@ -27,6 +27,7 @@ function App() {
     window.location.pathname === "/frontend/talking/chatting" ||
     window.location.pathname === "/frontend/talking/voice" ||
     window.location.pathname === "/frontend" ||
+    window.location.pathname === "/frontend/" ||
     window.location.pathname === "/frontend/landing" ||
     window.location.pathname === "/frontend/callback";
   return (

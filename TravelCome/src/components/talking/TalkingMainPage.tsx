@@ -157,7 +157,6 @@ const QuestionBox = styled.div`
   font-family: "JejuGothic";
   position: relative;
   padding: 25px;
-  border: 1px solid #000;
 `;
 const QuestionTitle = styled.div`
   font-family: "SanTokki";
