@@ -6,12 +6,12 @@ import { ReactComponent as TalkingClose } from "../../assets/talking/TalkingClos
 import { ReactComponent as TalkingVoiceBtn } from "../../assets/talking/TalkingVoiceBtn.svg";
 import { ReactComponent as TalkingLock } from "../../assets/talking/TalkingLock.svg";
 import LoadingTalking from "../layout/LoadingTalking";
-//import { useSpeechRecognition } from "react-speech-kit";
+import { useSpeechRecognition } from "react-speech-kit";
 //import { getSpeech } from "./utils/getSpeech";
 
 const TalkingVoicePage = () => {
   const navigate = useNavigate();
-  /*
+
   // 음성인식(STT)
 
   //playBtn
@@ -33,7 +33,7 @@ const TalkingVoicePage = () => {
       setValue(result);
     },
   });
-*/
+
   // TTS
   const [value2, setValue2] = useState("드라이브 코스로도 유명하다고 해요!");
 
@@ -62,12 +62,12 @@ const TalkingVoicePage = () => {
       </IconBox>
       <ChattingBox>
         <AI onClick={handleButton}>드라이브 코스로도 유명하다고 해요!</AI>
-        <Me>{/*value*/}</Me>
+        <Me>{value}</Me>
       </ChattingBox>
-      {/*listening && <LoadingTalking />*/}
+      {listening && <LoadingTalking />}
       <MenuBox>
         <TalkingClose id="menu" />
-        {/*isPlay ? (
+        {isPlay ? (
           <TalkingVoiceBtn
             id="menu"
             onClick={() => PlayButton()}
@@ -79,7 +79,7 @@ const TalkingVoicePage = () => {
             onClick={() => StopButton()}
             onMouseDown={stop}
           />
-        )*/}
+        )}
         <TalkingLock id="menu" />
       </MenuBox>
     </Container>
