@@ -88,7 +88,7 @@ const TalkingVoicePage = () => {
 export default TalkingVoicePage;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: #ffc692;
   position: relative;
@@ -96,6 +96,7 @@ const Container = styled.div`
 const TitleBox = styled.div`
   font-family: "SanTokki";
   padding: 20px 25px;
+  border: 1px solid #000;
 `;
 const Title = styled.div`
   //border: 1px solid #000;
@@ -111,6 +112,7 @@ const IconBox = styled.div`
   font-family: "JejuGothic";
   margin: 0 auto;
   text-align: center;
+  border: 1px solid #000;
 `;
 const ChattingBox = styled.div`
   font-family: "JejuGothic";
