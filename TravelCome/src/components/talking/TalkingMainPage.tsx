@@ -157,8 +157,7 @@ const QuestionBox = styled.div`
   font-family: "JejuGothic";
   position: relative;
   padding: 25px;
-  padding-bottom: 0px;
-  //border: 1px solid #000;
+  border: 1px solid #000;
 `;
 const QuestionTitle = styled.div`
   font-family: "SanTokki";
@@ -169,4 +168,8 @@ const QuestionListBox = styled.div`
   width: 100%;
   overflow: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

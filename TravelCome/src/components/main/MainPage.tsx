@@ -260,6 +260,10 @@ const MessageListBox = styled.div`
   height: 30px;
   overflow: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const RecommendBox = styled.div`
   position: relative;
@@ -271,6 +275,10 @@ const RecommendListBox = styled.div`
   width: 100%;
   overflow: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const Advertise = styled.div`
   width: 100%;

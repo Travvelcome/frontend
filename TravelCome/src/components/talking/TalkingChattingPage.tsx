@@ -165,6 +165,10 @@ const QuestionBox = styled.div`
   bottom: 90px;
   overflow: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const SearchBox = styled.div`
   width: 100vw;
@@ -174,7 +178,6 @@ const SearchBox = styled.div`
   left: 0px;
   padding: 20px 10px;
   padding-right: 60px;
-  border: 1px solid #111;
 
   #voice-icon {
     width: 36px;
@@ -198,7 +201,7 @@ const SearchBar = styled.div`
 `;
 const SearchInput = styled.input`
   font-family: "JejuGothic";
-  width: 250px;
+  width: 70%;
   height: 40px;
   border: none;
   margin-left: 20px;

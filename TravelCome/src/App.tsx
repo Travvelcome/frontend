@@ -26,7 +26,7 @@ function App() {
     window.location.pathname === "/frontend/talking" ||
     window.location.pathname === "/frontend/talking/chatting" ||
     window.location.pathname === "/frontend/talking/voice" ||
-    window.location.pathname === "/frontend/" ||
+    window.location.pathname === "/frontend" ||
     window.location.pathname === "/frontend/landing" ||
     window.location.pathname === "/frontend/callback";
   return (
@@ -34,7 +34,7 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/frontend/" element={<OnboardingPage />} />
+            <Route path="/frontend" element={<OnboardingPage />} />
             <Route path="/frontend/landing" element={<LandingFilterPage />} />
             <Route path="/frontend/callback" element={<Kakao />} />
             <Route path="/frontend/main" element={<MainPage />} />

@@ -117,6 +117,10 @@ const RecentListBox = styled.div`
   justify-content: space-evenly;
   overflow: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const SearchBox = styled.div`
   font-family: "JejuGothic";
