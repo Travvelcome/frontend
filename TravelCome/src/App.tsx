@@ -34,10 +34,10 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/frontend/onboarding" element={<OnboardingPage />} />
+            <Route path="/frontend" element={<OnboardingPage />} />
             <Route path="/frontend/landing" element={<LandingFilterPage />} />
             <Route path="/frontend/callback" element={<Kakao />} />
-            <Route path="/frontend" element={<MainPage />} />
+            <Route path="/frontend/main" element={<MainPage />} />
             <Route path="/frontend/map" element={<MapPage />} />
             <Route path="/frontend/filter" element={<FilterPage />} />
             <Route path="/frontend/search" element={<SearchPage />} />
