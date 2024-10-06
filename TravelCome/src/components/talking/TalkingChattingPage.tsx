@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { RiHeadphoneFill } from "react-icons/ri";
 import { IoIosArrowBack } from "react-icons/io";
 import QuestionList from "./TalkingQuestionList2";
+import { ReactComponent as TalkingHeadphone } from "../../assets/talking/TalkingHeadphone.svg";
 
 const TalkingChattingPage = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const TalkingChattingPage = () => {
             window.location.href = "/frontend/talking/voice";
           }}
         >
-          <RiHeadphoneFill size="30" />
+          <TalkingHeadphone />
         </div>
       </SearchBox>
     </Container>
@@ -158,7 +159,7 @@ const Me = styled.div`
   background-color: rgb(255, 107, 0, 0.8);
 `;
 const QuestionBox = styled.div`
-  width: 100%;
+  width: 100vw;
   font-family: "JejuGothic";
   position: absolute;
   bottom: 90px;
@@ -166,28 +167,30 @@ const QuestionBox = styled.div`
   white-space: nowrap;
 `;
 const SearchBox = styled.div`
+  width: 100vw;
   font-family: "JejuGothic";
   position: fixed;
   bottom: 0px;
   left: 0px;
   padding: 20px 10px;
   padding-right: 60px;
-  //border: 1px solid #111;
+  border: 1px solid #111;
 
   #voice-icon {
+    width: 36px;
+    height: 36px;
     color: #111;
     cursor: pointer;
     display: inline-block;
-    position: absolute;
-    top: 25px;
-    right: 10px;
     cursor: pointer;
+    vertical-align: middle;
+    margin-left: 10px;
   }
 `;
 const SearchBar = styled.div`
   font-family: "JejuGothic";
   position: relative;
-  width: 310px;
+  width: 80%;
   height: 44px;
   border-radius: 30px;
   border: 1px solid #000;

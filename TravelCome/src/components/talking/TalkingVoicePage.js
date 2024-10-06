@@ -34,7 +34,7 @@ const TalkingVoicePage = () => {
     },
   });
 
-  // TTS
+  // TTS -- 모바일에서 안됨...
   const [value2, setValue2] = useState("드라이브 코스로도 유명하다고 해요!");
 
   /*
