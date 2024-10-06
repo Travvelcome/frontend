@@ -13,7 +13,7 @@ const Onboarding1 = () => {
   const handleLogin = () => {
     window.location.href = kakaoURL;
   };
-
+  /*
   // 로그인되어 있으면 온보딩에서 메인으로 이동
   const navigate = useNavigate();
 
@@ -22,11 +22,11 @@ const Onboarding1 = () => {
     const token = localStorage.getItem("token");
 
     // 토큰이 있으면 /main으로 리다이렉트
-    if (!token) {
+    if (token) {
       navigate("/frontend/main");
     }
   }, [navigate]);
-
+*/
   return (
     <Container>
       <Title>혼저옵셔행</Title>
