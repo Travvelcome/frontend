@@ -22,7 +22,7 @@ const Onboarding1 = () => {
     const token = localStorage.getItem("token");
 
     // 토큰이 있으면 /main으로 리다이렉트
-    if (token) {
+    if (!token) {
       navigate("/frontend/main");
     }
   }, [navigate]);
