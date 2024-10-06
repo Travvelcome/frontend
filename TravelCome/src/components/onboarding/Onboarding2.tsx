@@ -37,9 +37,10 @@ export default Onboarding;
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: #547853;
   position: relative;
+  padding-bottom: 50px;
 
   #title {
     position: absolute;
