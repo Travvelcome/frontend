@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/frontend/static/css/main.850c1b03.css",
-    "main.js": "/frontend/static/js/main.7053d023.js",
+    "main.js": "/frontend/static/js/main.19ab33ee.js",
     "static/js/453.ed3810f9.chunk.js": "/frontend/static/js/453.ed3810f9.chunk.js",
     "static/media/JejuGothic.ttf": "/frontend/static/media/JejuGothic.5ab8dde3b67410fcb5f4.ttf",
     "static/media/HSSanTokki.ttf": "/frontend/static/media/HSSanTokki.b6254f8942b481e41ee0.ttf",
@@ -23,7 +23,7 @@
     "static/media/ModalVoucher.svg": "/frontend/static/media/ModalVoucher.2d1af9407c05dc68a77af5aff8bcd3cc.svg",
     "static/media/Mountain.svg": "/frontend/static/media/Mountain.ce9811ea12e0f031e1ad09dd9d1f03eb.svg",
     "static/media/Onboarding3.svg": "/frontend/static/media/Onboarding3.564d1a7b586519e183b0fbd8c947a437.svg",
-    "static/media/TalkingIcon.svg": "/frontend/static/media/TalkingIcon.8acc89ec1281cdb4d176943d8f1cca79.svg",
+    "static/media/TalkingIcon.svg": "/frontend/static/media/TalkingIcon.f794a7a1a6125c6883012a071f44855c.svg",
     "static/media/slick.svg": "/frontend/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/frontend/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/Knowledge.svg": "/frontend/static/media/Knowledge.45d899087f1ab0650ea49ebc565e138a.svg",
@@ -31,6 +31,7 @@
     "static/media/Information.svg": "/frontend/static/media/Information.da520e6e3a71ffb466a252fafbe9df7d.svg",
     "static/media/slick.woff": "/frontend/static/media/slick.295183786cd8a1389865.woff",
     "static/media/Arrow.svg": "/frontend/static/media/Arrow.a1f3793ad1fc71a399f85f43ab3d8aaf.svg",
+    "static/media/TalkingHeadphone.svg": "/frontend/static/media/TalkingHeadphone.87f945bc46f7d71628f98ba261b85d7f.svg",
     "static/media/TalkingLock.svg": "/frontend/static/media/TalkingLock.0f25bfa38944943fe55e2e494d30eb8c.svg",
     "static/media/Filter.svg": "/frontend/static/media/Filter.5b5264004815e5c10c6e9309de81f4bc.svg",
     "index.html": "/frontend/index.html",
@@ -40,11 +41,11 @@
     "static/media/OnboardingDot1.svg": "/frontend/static/media/OnboardingDot1.8453a2fa046bd1d00a0a29f00def19c0.svg",
     "static/media/CategoryDown.svg": "/frontend/static/media/CategoryDown.882e7f579ea03f0bd0f0dc05083b6342.svg",
     "main.850c1b03.css.map": "/frontend/static/css/main.850c1b03.css.map",
-    "main.7053d023.js.map": "/frontend/static/js/main.7053d023.js.map",
+    "main.19ab33ee.js.map": "/frontend/static/js/main.19ab33ee.js.map",
     "453.ed3810f9.chunk.js.map": "/frontend/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.850c1b03.css",
-    "static/js/main.7053d023.js"
+    "static/js/main.19ab33ee.js"
   ]
 }
