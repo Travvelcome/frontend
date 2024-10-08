@@ -88,12 +88,13 @@ const MainPage = () => {
   };
 
   const navigate = useNavigate();
+  const nickname = localStorage.getItem("nickname");
 
   return (
     <Container>
       <TitleBox>
         <Title>
-          민지님, <br />
+          {nickname}님, <br />
           어디로 떠날까요?
         </Title>
         <Frequency>
@@ -123,7 +124,8 @@ const MainPage = () => {
       </MessageBox>
       <RecommendBox>
         <Title2>
-          <div></div>민지님만을 위한 추천
+          <div></div>
+          {nickname}님만을 위한 추천
         </Title2>
         <More>더보기</More>
         <RecommendListBox>
