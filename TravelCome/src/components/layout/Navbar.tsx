@@ -13,26 +13,37 @@ const Navbar = () => {
   const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
   // 현재 경로에 따라 아이콘이 선택되었는지 확인
-  const getIconClass = (path: string) =>
-    location.pathname === path ? "click" : "noclick";
+  const getIconClass = (paths: string[]) =>
+    paths.includes(location.pathname) ? "click" : "noclick";
 
   return (
     <Container>
       <NavItem onClick={() => navigate("/frontend/main")}>
-        <HiOutlineHome className={getIconClass("/frontend/main")} />
+        <HiOutlineHome className={getIconClass(["/frontend/main"])} />
       </NavItem>
       <NavItem
         onClick={() => {
           window.location.href = "/frontend/map";
         }}
       >
-        <HiOutlineLocationMarker className={getIconClass("/frontend/map")} />
+        <HiOutlineLocationMarker className={getIconClass(["/frontend/map"])} />
       </NavItem>
       <NavItem onClick={() => navigate("/frontend/chatting")}>
-        <HiOutlineChatAlt2 className={getIconClass("/frontend/chatting")} />
+        <HiOutlineChatAlt2
+          className={getIconClass([
+            "/frontend/chatting",
+            "/frontend/chatting/history",
+          ])}
+        />
       </NavItem>
       <NavItem onClick={() => navigate("/frontend/my")}>
-        <HiOutlineUserCircle className={getIconClass("/frontend/my")} />
+        <HiOutlineUserCircle
+          className={getIconClass([
+            "/frontend/my",
+            "/frontend/my/leave",
+            "/frontend/stamp",
+          ])}
+        />
       </NavItem>
     </Container>
   );

@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ReactComponent as FrequencyIcon } from "../../assets/common/Stamp.svg";
 import { ReactComponent as Arrow } from "../../assets/common/Arrow.svg";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
+  const navigate = useNavigate();
+  const nickname = localStorage.getItem("nickname");
+
   return (
     <Container>
       <TitleBox>
@@ -17,11 +21,15 @@ const MyPage = () => {
           <img id="images" />
         </Image>
         <TextBox>
-          <BigText>닉네임</BigText>
+          <BigText>{nickname}</BigText>
           <SmallText>.........</SmallText>
         </TextBox>
       </InfoBox>
-      <FrequencyBox>
+      <FrequencyBox
+        onClick={() => {
+          navigate("/frontend/stamp");
+        }}
+      >
         <span id="icon">
           <FrequencyIcon />
         </span>
@@ -61,7 +69,14 @@ const MyPage = () => {
         >
           회원 탈퇴
         </Menu>
-        <Menu>로그아웃</Menu>
+        <Menu
+          onClick={() => {
+            localStorage.clear();
+            window.location.href = "/frontend";
+          }}
+        >
+          로그아웃
+        </Menu>
       </SettingBox>
     </Container>
   );

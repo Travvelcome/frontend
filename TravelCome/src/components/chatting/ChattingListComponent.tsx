@@ -6,7 +6,7 @@ const ChattingListComponent = () => {
     <>
       <Container
         onClick={() => {
-          window.location.href = "/frontend/chattinghistory";
+          window.location.href = "/frontend/chatting/history";
         }}
       >
         <Image

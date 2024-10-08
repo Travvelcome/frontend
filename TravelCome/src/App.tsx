@@ -44,7 +44,7 @@ function App() {
             <Route path="/frontend/search" element={<SearchPage />} />
             <Route path="/frontend/chatting" element={<ChattingPage />} />
             <Route
-              path="/frontend/chattinghistory"
+              path="/frontend/chatting/history"
               element={<ChattingHistoryPage />}
             />
             <Route path="/frontend/my" element={<MyPage />} />

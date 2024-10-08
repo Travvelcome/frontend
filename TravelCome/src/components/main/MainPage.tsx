@@ -8,6 +8,7 @@ import { ReactComponent as Arrow } from "../../assets/common/Arrow.svg";
 import { BiCurrentLocation } from "react-icons/bi";
 import { getLandmarkFind } from "../../api/Landmark";
 import EventBanner from "./EventBanner";
+import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -86,6 +87,8 @@ const MainPage = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <Container>
       <TitleBox>
@@ -130,7 +133,11 @@ const MainPage = () => {
         </RecommendListBox>
       </RecommendBox>
       <EventBanner />
-      <FrequencyBox>
+      <FrequencyBox
+        onClick={() => {
+          navigate("/frontend/stamp");
+        }}
+      >
         <span id="icon">
           <FrequencyIcon />
         </span>

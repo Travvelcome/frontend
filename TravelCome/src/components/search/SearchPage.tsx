@@ -25,7 +25,7 @@ const SearchPage = () => {
     setThema(index);
   };
 
-  //카테고리 필터창
+  // 카테고리 필터창
   const [isOpen, setIsOpen] = useState(false);
   const FilterButton = () => {
     setIsOpen(true);
