@@ -7,6 +7,8 @@ import { FiMinus } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { IoSearchSharp } from "react-icons/io5";
 import { ReactComponent as Filter } from "../../assets/map/Filter.svg";
+import { useNavigate } from "react-router-dom";
+import MapFilterComponent from "./MapFilterComponent";
 
 declare global {
   interface Window {
@@ -61,38 +63,65 @@ const MapPage = () => {
     marker.setMap(map);
   };
 
+  const navigate = useNavigate();
+  const handleClick = (path: string) => {
+    navigate(path);
+  };
+
+  //관심사 필터창
+  const [isOpen, setIsOpen] = useState(false);
+  const FilterButton = () => {
+    setIsOpen(true);
+  };
+
+  // 관심사 필터창 내용 상태 저장
+  const [isFilter, setIsFilter] = useState<string>("관심사");
+
   return (
     <Container>
       <Map id="map"></Map>
       <BackBtn
         onClick={() => {
-          window.location.href = "/frontend";
+          window.location.href = "/frontend/main";
         }}
       >
         <IoIosArrowBack />
       </BackBtn>
       <FilterBtn
-        onClick={() => {
-          window.location.href = "/frontend/filter";
+        onClick={() => FilterButton()}
+        style={{
+          backgroundColor:
+            isFilter === "자연"
+              ? "#547853"
+              : isFilter === "지식"
+              ? "#FF6B00"
+              : isFilter === "문화"
+              ? "#474751"
+              : "#fff",
+          color: isFilter === "관심사" ? "#000" : "#fff",
         }}
       >
         <span>
-          <Filter />
+          <FaFilter />
         </span>{" "}
-        관심사
+        {isFilter}
       </FilterBtn>
       <BtnBox>
         <LocationBtn onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
         </LocationBtn>
-        <SearchBtn
-          onClick={() => {
-            window.location.href = "/frontend/search";
-          }}
-        >
+        <SearchBtn onClick={() => handleClick("/frontend/search")}>
           <IoSearchSharp id="search" />
         </SearchBtn>
       </BtnBox>
+      {isOpen && (
+        <MapFilterComponent
+          setIsFilter={setIsFilter}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        />
+      )}
     </Container>
   );
 };
@@ -113,17 +142,17 @@ const FilterBtn = styled.div`
   line-height: 30px;
   text-align: center;
   font-family: "JejuGothic";
-  font-size: 17px;
+  font-size: 14px;
   background-color: #fff;
   color: #111;
-  border-radius: 50px;
+  border-radius: 16px;
   position: absolute;
   top: 30px;
   right: 30px;
   z-index: 999;
   cursor: pointer;
   span {
-    vertical-align: middle;
+    line-height: 32px;
   }
 `;
 const BackBtn = styled.div`
