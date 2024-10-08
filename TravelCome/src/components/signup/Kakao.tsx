@@ -7,7 +7,17 @@ const Kakao = () => {
   const code = url.split("=")[1];
 
   const kakaoLogin = async () => {
-    const response = await getKakaoLogin(code);
+    try {
+      const response = await getKakaoLogin(code);
+      console.log("카카오 로그인하기 :", response);
+
+      localStorage.setItem("token", response.id);
+      localStorage.setItem("nickname", response.nickname);
+      localStorage.setItem("email", response.email);
+    } catch (error) {
+      console.error("카카오 로그인 오류:", error);
+    }
+    /*
     if (response.code === 200) {
       console.log("카카오 로그인하기 :", response);
       localStorage.setItem("token", response.id);
@@ -16,14 +26,6 @@ const Kakao = () => {
       //window.location.href = "/frontend";
     } else {
       //window.location.href = "/frontend/onboarding";
-    }
-
-    /*
-    try {
-      const response = await getKakaoLogin(code);
-      console.log("카카오 로그인하기 :", response);
-    } catch (error) {
-      console.error("카카오 로그인 오류:", error);
     }
       */
   };
