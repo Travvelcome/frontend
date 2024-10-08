@@ -61,8 +61,8 @@ function App() {
             <Route path="/frontend/stamp" element={<StampPage />} />
           </Routes>
         </div>
+        {!noLayout && <Navbar />}
       </BrowserRouter>
-      {!noLayout && <Navbar />}
     </>
   );
 }
