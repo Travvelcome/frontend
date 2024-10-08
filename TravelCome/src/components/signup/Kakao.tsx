@@ -1,9 +1,12 @@
 import React from "react";
 import { getKakaoLogin } from "../../api/Auth";
 import Loading from "../layout/Loading";
+import { useNavigate } from "react-router-dom";
 
 const Kakao = () => {
   const url = window.location.href;
+  const navigate = useNavigate();
+
   const code = url.split("=")[1];
 
   const kakaoLogin = async () => {
@@ -14,6 +17,10 @@ const Kakao = () => {
       localStorage.setItem("token", response.id);
       localStorage.setItem("nickname", response.nickname);
       localStorage.setItem("email", response.email);
+      localStorage.setItem("profileImageUrl", response.profileImageUrl);
+      localStorage.setItem("thumbnailImageUrl", response.thumbnailImageUrl);
+
+      navigate("/frontend/onboarding");
     } catch (error) {
       console.error("카카오 로그인 오류:", error);
     }
