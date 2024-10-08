@@ -23,7 +23,7 @@ const Onboarding1 = () => {
 
     // 토큰이 있으면 /main으로 리다이렉트
     if (token) {
-      navigate("/frontend/main");
+      window.location.href = "/frontend/main";
     }
   }, [navigate]);
 
@@ -51,7 +51,7 @@ export default Onboarding1;
 
 const Container = styled.div`
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-color: #fdac01;
   position: relative;
   padding-bottom: 50px;

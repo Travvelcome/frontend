@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ReactComponent as OnBoarding2 } from "../../assets/onboarding/Onboarding2.svg";
 import { ReactComponent as OnBoardingDot2 } from "../../assets/onboarding/OnboardingDot2.svg";
+import { useNavigate } from "react-router-dom";
 
 const Onboarding = () => {
   const client_id = "03a20e0df8d91e05664ddf8d209bc596";
@@ -11,6 +12,19 @@ const Onboarding = () => {
   const handleLogin = () => {
     window.location.href = kakaoURL;
   };
+
+  // 로그인되어 있으면 온보딩에서 메인으로 이동
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 로컬 스토리지에서 토큰 가져오기
+    const token = localStorage.getItem("token");
+
+    // 토큰이 있으면 /main으로 리다이렉트
+    if (token) {
+      window.location.href = "/frontend/main";
+    }
+  }, [navigate]);
 
   return (
     <Container>
@@ -37,7 +51,7 @@ export default Onboarding;
 
 const Container = styled.div`
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-color: #547853;
   position: relative;
   padding-bottom: 50px;

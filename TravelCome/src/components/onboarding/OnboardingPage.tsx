@@ -42,7 +42,7 @@ export default OnboardingPage;
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: #fdac01;
   position: relative;
 
@@ -51,42 +51,4 @@ const Container = styled.div`
     right: 0px;
     top: 180px;
   }
-`;
-const Title = styled.div`
-  font-family: "SanTokki";
-  font-size: 48px;
-  line-height: 40px;
-  color: #fff;
-  padding-top: 100px;
-  padding-left: 45px;
-`;
-const MessageBox = styled.div`
-  font-family: "JejuGothic";
-  margin-left: 45px;
-  margin-top: 340px;
-`;
-const BigMessage = styled.div`
-  font-size: 24px;
-  line-height: 35px;
-  color: #000;
-`;
-const SmallMessage = styled.div`
-  font-size: 16px;
-  line-height: 40px;
-  color: #fff;
-`;
-const KakaoLogin = styled.div`
-  width: 210px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  font-family: "JejuGothic";
-  font-size: 17px;
-  background-color: #474751;
-  color: #fff;
-  border-radius: 30px;
-  margin: 0 auto;
-  margin-top: 100px;
-  z-index: 999;
-  cursor: pointer;
 `;
