@@ -27,7 +27,7 @@ const Kakao = () => {
     }
       */
   };
-  kakaoLogin();
+  //kakaoLogin();
 
   return (
     <>
