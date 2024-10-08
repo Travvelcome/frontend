@@ -20,7 +20,7 @@ const Kakao = () => {
       localStorage.setItem("profileImageUrl", response.profileImageUrl);
       localStorage.setItem("thumbnailImageUrl", response.thumbnailImageUrl);
 
-      navigate("/frontend/onboarding");
+      navigate("/frontend/landing");
     } catch (error) {
       console.error("카카오 로그인 오류:", error);
     }
