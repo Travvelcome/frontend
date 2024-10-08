@@ -14,11 +14,17 @@ const Kakao = () => {
       const response = await getKakaoLogin(code);
       console.log("카카오 로그인하기 :", response);
 
-      localStorage.setItem("token", response.id);
-      localStorage.setItem("nickname", response.nickname);
-      localStorage.setItem("email", response.email);
-      localStorage.setItem("profileImageUrl", response.profileImageUrl);
-      localStorage.setItem("thumbnailImageUrl", response.thumbnailImageUrl);
+      localStorage.setItem("token", response.accessToken);
+      localStorage.setItem("nickname", response.userInfo.nickname);
+      localStorage.setItem("email", response.userInfo.email);
+      localStorage.setItem(
+        "profileImageUrl",
+        response.userInfo.profileImageUrl
+      );
+      localStorage.setItem(
+        "thumbnailImageUrl",
+        response.userInfo.thumbnailImageUrl
+      );
 
       navigate("/frontend/landing");
     } catch (error) {
