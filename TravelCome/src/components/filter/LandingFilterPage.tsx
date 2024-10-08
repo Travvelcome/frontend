@@ -8,7 +8,21 @@ const LandingFilterPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    window.location.href = "";
+    window.location.href = "/frontend/main";
+  };
+
+  // 관심사 선택 항목 상태 배열
+  const [selectedItems, setSelectedItems] = useState<boolean[]>(
+    Array(12).fill(false) // 총 12개의 LandingComponent가 있다고 가정
+  );
+
+  // 관심사 선택 항목을 선택/해제하는 함수
+  const toggleSelection = (index: number) => {
+    setSelectedItems((prevSelected) => {
+      const updatedSelection = [...prevSelected];
+      updatedSelection[index] = !updatedSelection[index]; // 선택 상태를 토글
+      return updatedSelection;
+    });
   };
 
   return (
@@ -16,7 +30,7 @@ const LandingFilterPage = () => {
       <MessageBox>
         <BackBtn
           onClick={() => {
-            navigate(-1);
+            navigate("/frontend");
           }}
         >
           <IoIosArrowBack />
@@ -29,24 +43,23 @@ const LandingFilterPage = () => {
         </SmallMessage>
       </MessageBox>
       <FilterBox>
-        <CategoryBox>
-          <LandingComponent />
-          <LandingComponent />
-          <LandingComponent />
-          <LandingComponent />
-        </CategoryBox>
-        <CategoryBox>
-          <LandingComponent />
-          <LandingComponent />
-          <LandingComponent />
-          <LandingComponent />
-        </CategoryBox>
-        <CategoryBox>
-          <LandingComponent />
-          <LandingComponent />
-          <LandingComponent />
-          <LandingComponent />
-        </CategoryBox>
+        {/* 12개의 컴포넌트를 3줄로 나누어 렌더링 */}
+        {[0, 1, 2].map((rowIndex) => (
+          <CategoryBox key={rowIndex}>
+            {Array(4)
+              .fill(0)
+              .map((_, colIndex) => {
+                const index = rowIndex * 4 + colIndex;
+                return (
+                  <LandingComponent
+                    key={index}
+                    isSelected={selectedItems[index]} // 선택 상태 전달
+                    onClick={() => toggleSelection(index)} // 클릭 이벤트 처리
+                  />
+                );
+              })}
+          </CategoryBox>
+        ))}
       </FilterBox>
       <CompleteBox>
         <Notice>나중에 설정에서 다시 선택할 수 있어요 :{")"}</Notice>

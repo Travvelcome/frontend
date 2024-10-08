@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const LandingComponent = () => {
+const LandingComponent = ({ isSelected, onClick }) => {
   return (
     <>
-      <Filter>
+      <Filter isSelected={isSelected} onClick={onClick}>
         <TagBox>
           <Icon>⛰️</Icon>
           <Name>산 / 오름</Name>
@@ -18,7 +18,8 @@ export default LandingComponent;
 const Filter = styled.div`
   width: 110px;
   height: 110px;
-  background-color: #fff;
+  background-color: ${(props) =>
+    props.isSelected ? "rgb(255, 255, 255)" : "rgb(255, 255, 255, 0.5)"};
   border-radius: 50%;
   display: inline-block;
   margin: 0 15px;
