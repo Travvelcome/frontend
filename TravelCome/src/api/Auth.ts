@@ -3,7 +3,7 @@ import { request } from "./client";
 export const getKakaoLogin = async (code: string) => {
   try {
     const res = await request.get({
-      url: `/frontend?code=${code}`,
+      url: `/callback?code=${code}`,
       params: {},
     });
     console.log("카카오 로그인 완료", res);
