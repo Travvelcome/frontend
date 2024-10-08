@@ -1,44 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { HiOutlineHome } from "react-icons/hi";
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { HiOutlineChatAlt2 } from "react-icons/hi";
-import { HiOutlineUserCircle } from "react-icons/hi";
+import {
+  HiOutlineHome,
+  HiOutlineLocationMarker,
+  HiOutlineChatAlt2,
+  HiOutlineUserCircle,
+} from "react-icons/hi";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation(); // 현재 URL 경로 가져오기
+  const navigate = useNavigate(); // 페이지 이동을 위한 훅
+
+  // 현재 경로에 따라 아이콘이 선택되었는지 확인
+  const getIconClass = (path: string) =>
+    location.pathname === path ? "click" : "noclick";
+
   return (
     <Container>
-      <Main
-        onClick={() => {
-          window.location.href = "/frontend/main";
-        }}
-      >
-        <HiOutlineHome />
-      </Main>
-      <Map
+      <NavItem onClick={() => navigate("/frontend/main")}>
+        <HiOutlineHome className={getIconClass("/frontend/main")} />
+      </NavItem>
+      <NavItem
         onClick={() => {
           window.location.href = "/frontend/map";
         }}
       >
-        <HiOutlineLocationMarker />
-      </Map>
-      <Chatting
-        onClick={() => {
-          window.location.href = "/frontend/chatting";
-        }}
-      >
-        <HiOutlineChatAlt2 />
-      </Chatting>
-      <MyPage
-        onClick={() => {
-          window.location.href = "/frontend/my";
-        }}
-      >
-        <HiOutlineUserCircle />
-      </MyPage>
+        <HiOutlineLocationMarker className={getIconClass("/frontend/map")} />
+      </NavItem>
+      <NavItem onClick={() => navigate("/frontend/chatting")}>
+        <HiOutlineChatAlt2 className={getIconClass("/frontend/chatting")} />
+      </NavItem>
+      <NavItem onClick={() => navigate("/frontend/my")}>
+        <HiOutlineUserCircle className={getIconClass("/frontend/my")} />
+      </NavItem>
     </Container>
   );
 };
+
 export default Navbar;
 
 const Container = styled.div`
@@ -51,28 +50,17 @@ const Container = styled.div`
   justify-content: space-evenly;
   position: fixed;
   bottom: 0;
+
+  .click {
+    color: #fdac01;
+  }
+  .noclick {
+    color: #e0e0e0;
+  }
 `;
-const Main = styled.div`
+
+const NavItem = styled.div`
   font-size: 30px;
   line-height: 70px;
-  color: #fdac01;
-  cursor: pointer;
-`;
-const Map = styled.div`
-  font-size: 30px;
-  line-height: 70px;
-  color: #fdac01;
-  cursor: pointer;
-`;
-const Chatting = styled.div`
-  font-size: 30px;
-  line-height: 70px;
-  color: #fdac01;
-  cursor: pointer;
-`;
-const MyPage = styled.div`
-  font-size: 30px;
-  line-height: 70px;
-  color: #fdac01;
   cursor: pointer;
 `;
