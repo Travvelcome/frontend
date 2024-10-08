@@ -14,7 +14,11 @@ const SearchListComponent = () => {
         <TextBox>
           <BigText>용두암</BigText>
           <SmallText>설명</SmallText>
-          <Category>카테고리</Category>
+          <CategoryBox>
+            <FilterNature>🌊️ 바다 / 섬</FilterNature>
+            <FilterKnowledge>📜 역사 / 전통</FilterKnowledge>
+            <FilterCulture>🏛️ 전시 / 박물관</FilterCulture>
+          </CategoryBox>
         </TextBox>
       </Container>
       <hr />
@@ -50,7 +54,43 @@ const SmallText = styled.div`
   color: #929292;
   font-size: 15px;
 `;
-const Category = styled.div`
+const CategoryBox = styled.div`
   margin-top: 8px;
   font-size: 15px;
+`;
+const FilterNature = styled.span`
+  font-family: "JejuGothic";
+  font-size: 8px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 7px;
+  margin: 5px 3px;
+  border: 1px solid #547853;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+`;
+const FilterKnowledge = styled.span`
+  font-family: "JejuGothic";
+  font-size: 8px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 7px;
+  margin: 5px 3px;
+  border: 1px solid #ff6b00;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+`;
+const FilterCulture = styled.span`
+  font-family: "JejuGothic";
+  font-size: 8px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 7px;
+  margin: 5px 3px;
+  border: 1px solid #474751;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
 `;

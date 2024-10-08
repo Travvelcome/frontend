@@ -4,13 +4,32 @@ import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 import { IoSearchSharp } from "react-icons/io5";
 import { ReactComponent as All } from "../../assets/search/All.svg";
-import { ReactComponent as Mountain } from "../../assets/search/Mountain.svg";
+import { ReactComponent as Nature } from "../../assets/search/Nature.svg";
 import { ReactComponent as Knowledge } from "../../assets/search/Knowledge.svg";
 import { ReactComponent as Culture } from "../../assets/search/Culture.svg";
+import { ReactComponent as All2 } from "../../assets/search/All2.svg";
+import { ReactComponent as Nature2 } from "../../assets/search/Nature2.svg";
+import { ReactComponent as Knowledge2 } from "../../assets/search/Knowledge2.svg";
+import { ReactComponent as Culture2 } from "../../assets/search/Culture2.svg";
 import { ReactComponent as Down } from "../../assets/common/CategoryDown.svg";
+import { ReactComponent as Up } from "../../assets/common/CategoryUp.svg";
 import ListComponent from "./SearchListComponent";
+import CategoryComponent from "./CategoryComponent";
+
 const SearchPage = () => {
   const navigate = useNavigate();
+
+  // 관심사 테마 선택
+  const [thema, setThema] = useState<number>(0);
+  const handleClick = (index: number) => {
+    setThema(index);
+  };
+
+  //카테고리 필터창
+  const [isOpen, setIsOpen] = useState(false);
+  const FilterButton = () => {
+    setIsOpen(true);
+  };
 
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -46,49 +65,34 @@ const SearchPage = () => {
           </div>
         </SearchBar>
         <CategoryBox>
-          <Category>
-            <div id="all">
-              <All />
-            </div>
-            <br />
-            전체 <br />
-            <Dot />
-          </Category>
-          <Category>
-            <div>
-              <Mountain />
-            </div>
-            <br />
-            자연
-            <br />
-            <Dot />
-          </Category>
-          <Category>
-            <div>
-              <Knowledge />
-            </div>
-            <br />
-            지식
-            <br />
-            <Dot />
-          </Category>
-          <Category>
-            <div>
-              <Culture />
-            </div>
-            <br />
-            문화
-            <br />
-            <Dot />
-          </Category>
+          <div onClick={() => handleClick(0)}>
+            {thema === 0 ? <All /> : <All2 />}
+          </div>
+          <div onClick={() => handleClick(1)}>
+            {thema === 1 ? <Nature /> : <Nature2 />}
+          </div>
+          <div onClick={() => handleClick(2)}>
+            {thema === 2 ? <Knowledge /> : <Knowledge2 />}
+          </div>
+          <div onClick={() => handleClick(3)}>
+            {thema === 3 ? <Culture /> : <Culture2 />}
+          </div>
         </CategoryBox>
         <CategoryList>
           카테고리:{" "}
-          <span>
-            <Down />
+          <span onClick={() => FilterButton()}>
+            {isOpen ? <Up /> : <Down />}
           </span>
+          {isOpen && (
+            <CategoryComponent
+              onClose={() => {
+                setIsOpen(false);
+              }}
+            />
+          )}
         </CategoryList>
       </SearchBox>
+
       <ListBox>
         <ListComponent />
         <ListComponent />
@@ -173,34 +177,9 @@ const CategoryBox = styled.div`
   justify-content: space-evenly;
   margin-top: 30px;
   margin-bottom: 30px;
-`;
-const Category = styled.div`
-  width: 68px;
-  height: 72px;
-  font-family: "JejuGothic";
-  position: relative;
-  border: 1px solid #e0e0e0;
-  border-radius: 17px;
-  background-color: rgb(224, 224, 224, 0.5);
-  font-size: 13px;
-  text-align: center;
-  cursor: pointer;
-  color: #000;
   div {
-    margin-top: 5px;
-    margin-bottom: -8px;
+    cursor: pointer;
   }
-  #all {
-    margin-right: 5px;
-  }
-`;
-const Dot = styled.div`
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background-color: #000;
-  border: 2px solid #000;
-  margin: 0 auto;
 `;
 const CategoryList = styled.div`
   font-family: "SanTokki";
