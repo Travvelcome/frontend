@@ -7,6 +7,7 @@ import { ReactComponent as FrequencyIcon } from "../../assets/common/Stamp.svg";
 import { ReactComponent as Arrow } from "../../assets/common/Arrow.svg";
 import { BiCurrentLocation } from "react-icons/bi";
 import { getLandmarkFind } from "../../api/Landmark";
+import EventBanner from "./EventBanner";
 
 declare global {
   interface Window {
@@ -128,7 +129,7 @@ const MainPage = () => {
           <RecommendList />
         </RecommendListBox>
       </RecommendBox>
-      <Advertise>광고</Advertise>
+      <EventBanner />
       <FrequencyBox>
         <span id="icon">
           <FrequencyIcon />
