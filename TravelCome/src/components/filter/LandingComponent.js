@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const LandingComponent = ({ isSelected, onClick }) => {
+const LandingComponent = ({ icon, name, isFilterSelected, onClick }) => {
   return (
     <>
-      <Filter isSelected={isSelected} onClick={onClick}>
+      <Filter isFilterSelected={isFilterSelected} onClick={onClick}>
         <TagBox>
-          <Icon>⛰️</Icon>
-          <Name>산 / 오름</Name>
+          <Icon>{icon}</Icon>
+          <Name>{name}</Name>
         </TagBox>
       </Filter>
     </>
@@ -19,7 +19,7 @@ const Filter = styled.div`
   width: 110px;
   height: 110px;
   background-color: ${(props) =>
-    props.isSelected ? "rgb(255, 255, 255)" : "rgb(255, 255, 255, 0.5)"};
+    props.isFilterSelected ? "rgb(255, 255, 255)" : "rgb(255, 255, 255, 0.5)"};
   border-radius: 50%;
   display: inline-block;
   margin: 0 15px;
