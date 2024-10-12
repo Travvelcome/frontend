@@ -14,7 +14,24 @@ import { ReactComponent as Culture2 } from "../../assets/search/Culture2.svg";
 import { ReactComponent as Down } from "../../assets/common/CategoryDown.svg";
 import { ReactComponent as Up } from "../../assets/common/CategoryUp.svg";
 import ListComponent from "./SearchListComponent";
-import CategoryComponent from "./CategoryComponent";
+import NatureComponent from "./NatureComponent";
+import KnowledgeComponent from "./KnowledgeComponent";
+import CultureComponent from "./CultureComponent";
+
+import {
+  getLandmarkCategory,
+  getLandmarks,
+  getLandmarkSearch,
+  getLandmarksThema,
+} from "../../api/Landmark";
+
+interface DataItem {
+  landmarkId: number;
+  title: string;
+  description: string;
+  categories: string[];
+  imageUrl: string;
+}
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -31,12 +48,77 @@ const SearchPage = () => {
     setIsOpen(true);
   };
 
-  // 검색어
+  // API 연동
+  const [landmarkList, setLandmarkList] = useState<DataItem[]>([]);
+
+  // 랜드마크 검색 api 연동
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = async (e: any) => {
     const keyword = e.target.value;
     setSearchKeyword(keyword);
+    console.log("검색어 :", keyword);
+
+    try {
+      const response = await getLandmarkSearch(keyword);
+      setLandmarkList(response.result);
+      console.log("랜드마크 검색 조회:", response.result);
+    } catch (error) {
+      console.error("랜드마크 검색 오류:", error);
+    }
+  };
+
+  const searchButton = async () => {
+    try {
+      const response = await getLandmarkSearch(searchKeyword);
+      setLandmarkList(response.result);
+      console.log("랜드마크 검색 조회:", response.result);
+    } catch (error) {
+      console.error("랜드마크 검색 오류:", error);
+    }
+  };
+
+  // 랜드마크 목록 조회 api 연동(완료)
+  useEffect(() => {
+    fetchLandmarkList();
+  }, []);
+
+  const fetchLandmarkList = async () => {
+    try {
+      const response = await getLandmarks();
+      setLandmarkList(response.result);
+      console.log("랜드마크 전체 목록 조회:", response.result);
+    } catch (error) {
+      console.error("랜드마크 전체 목록 조회 오류:", error);
+    }
+  };
+
+  //랜드마크 테마별 목록 조회(자연, 지식, 문화)
+  const landmarkThemaButton = async (name: string) => {
+    try {
+      const response = await getLandmarksThema(name);
+      setLandmarkList(response.result);
+      console.log("랜드마크 테마별 목록 조회:", response.result);
+    } catch (error) {
+      console.error("랜드마크 테마별 목록 조회 오류:", error);
+    }
+  };
+
+  // 랜드마크 태그별 목록 조회
+  const [selectedTag, setSelectedTag] = useState<string>("MOUNTAIN");
+
+  useEffect(() => {
+    fetchLandmarkTagList(selectedTag);
+  }, [selectedTag]);
+
+  const fetchLandmarkTagList = async (tag: string) => {
+    try {
+      const response = await getLandmarkCategory(tag);
+      setLandmarkList(response.result);
+      console.log("랜드마크 태그별 목록 조회:", response.result);
+    } catch (error) {
+      console.error("랜드마크 태그별 목록 조회 오류:", error);
+    }
   };
 
   return (
@@ -44,7 +126,7 @@ const SearchPage = () => {
       <TitleBox>
         <BackBtn
           onClick={() => {
-            navigate(-1);
+            navigate("/frontend/map");
           }}
         >
           <IoClose />
@@ -60,21 +142,46 @@ const SearchPage = () => {
             value={searchKeyword}
             onChange={handleInputChange}
           />
-          <div id="search-icon">
+          <div
+            id="search-icon"
+            onClick={() => {
+              searchButton();
+            }}
+          >
             <IoSearchSharp size="23" />
           </div>
         </SearchBar>
         <CategoryBox>
-          <div onClick={() => handleClick(0)}>
+          <div
+            onClick={() => {
+              handleClick(0);
+              fetchLandmarkList();
+            }}
+          >
             {thema === 0 ? <All /> : <All2 />}
           </div>
-          <div onClick={() => handleClick(1)}>
+          <div
+            onClick={() => {
+              handleClick(1);
+              landmarkThemaButton("nature");
+            }}
+          >
             {thema === 1 ? <Nature /> : <Nature2 />}
           </div>
-          <div onClick={() => handleClick(2)}>
+          <div
+            onClick={() => {
+              handleClick(2);
+              landmarkThemaButton("knowledge");
+            }}
+          >
             {thema === 2 ? <Knowledge /> : <Knowledge2 />}
           </div>
-          <div onClick={() => handleClick(3)}>
+          <div
+            onClick={() => {
+              handleClick(3);
+              landmarkThemaButton("culture");
+            }}
+          >
             {thema === 3 ? <Culture /> : <Culture2 />}
           </div>
         </CategoryBox>
@@ -83,23 +190,44 @@ const SearchPage = () => {
           <span onClick={() => FilterButton()}>
             {isOpen ? <Up /> : <Down />}
           </span>
-          {isOpen && (
-            <CategoryComponent
+          {isOpen && thema === 1 ? (
+            <NatureComponent
+              setSelectedTag={setSelectedTag}
               onClose={() => {
                 setIsOpen(false);
               }}
             />
+          ) : isOpen && thema === 2 ? (
+            <KnowledgeComponent
+              setSelectedTag={setSelectedTag}
+              onClose={() => {
+                setIsOpen(false);
+              }}
+            />
+          ) : isOpen && thema === 3 ? (
+            <CultureComponent
+              setSelectedTag={setSelectedTag}
+              onClose={() => {
+                setIsOpen(false);
+              }}
+            />
+          ) : (
+            <></>
           )}
         </CategoryList>
       </SearchBox>
 
       <ListBox>
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
+        {landmarkList.map((request, index) => (
+          <ListComponent
+            key={index}
+            landmarkId={request.landmarkId}
+            title={request.title}
+            description={request.description}
+            categories={request.categories}
+            imageUrl={request.imageUrl}
+          />
+        ))}
       </ListBox>
     </Container>
   );

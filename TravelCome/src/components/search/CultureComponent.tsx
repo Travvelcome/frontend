@@ -6,30 +6,33 @@ import { ReactComponent as Filter } from "../../assets/map/Filter.svg";
 
 interface ModalProps {
   onClose: () => void;
+  setSelectedTag: (data: string) => void;
 }
 
-const CategoryComponent = ({ onClose }: ModalProps) => {
-  // 관심사 필터창 닫기
+const CultureComponent = ({ onClose, setSelectedTag }: ModalProps) => {
+  // 관심사 태그창 닫기
   const handleClose = () => {
     onClose?.();
   };
 
-  //필터 클릭
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]); // 선택된 필터들 상태 관리
+  // 관심사 태그 선택
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // 하나의 필터만 선택하도록 상태 관리
 
   // 필터 클릭 시 상태 업데이트 함수
-  const handleFilterClick = (filter: string) => {
-    if (selectedFilters.includes(filter)) {
-      // 이미 선택된 필터면 선택 해제
-      setSelectedFilters(selectedFilters.filter((f) => f !== filter));
+  const handleFilterClick = (tag: string) => {
+    if (selectedFilter === tag) {
+      // 이미 선택된 필터면 그대로 냅두기
+      setSelectedFilter(tag);
+      setSelectedTag(tag);
     } else {
-      // 선택되지 않은 필터면 추가
-      setSelectedFilters([...selectedFilters, filter]);
+      // 선택되지 않은 필터면 해당 필터를 선택
+      setSelectedFilter(tag);
+      setSelectedTag(tag);
     }
   };
 
   // 필터가 선택되었는지 확인하는 함수
-  const isFilterSelected = (filter: string) => selectedFilters.includes(filter);
+  const isFilterSelected = (filter: string) => selectedFilter === filter;
 
   return (
     <ModalContainer>
@@ -40,59 +43,67 @@ const CategoryComponent = ({ onClose }: ModalProps) => {
           <Menu>전체</Menu>
           <hr />
           <Menu
-            onClick={() => handleFilterClick("산 / 오름")}
+            onClick={() => handleFilterClick("EXHIBITION")}
             style={{
-              opacity: isFilterSelected("산 / 오름") ? 1 : 0.5,
+              opacity: isFilterSelected("EXHIBITION") ? 1 : 0.5,
             }}
           >
-            ⛰️ 산 / 오름
+            🏛️ 전시 / 박물관
           </Menu>
           <Menu
-            onClick={() => handleFilterClick("바다 / 섬")}
+            onClick={() => handleFilterClick("ART")}
             style={{
-              opacity: isFilterSelected("바다 / 섬") ? 1 : 0.5,
+              opacity: isFilterSelected("ART") ? 1 : 0.5,
             }}
           >
-            🌊️ 바다 / 섬
+            🎨 예술
           </Menu>
           <Menu
-            onClick={() => handleFilterClick("정원 / 수목원")}
+            onClick={() => handleFilterClick("CRAFT_EXPERIENCE")}
             style={{
-              opacity: isFilterSelected("정원 / 수목원") ? 1 : 0.5,
+              opacity: isFilterSelected("CRAFT_EXPERIENCE") ? 1 : 0.5,
             }}
           >
-            🪴 정원 / 수목원
+            🧶 공예 / 체험
           </Menu>
           <Menu
-            onClick={() => handleFilterClick("산책 / 탐방로")}
+            onClick={() => handleFilterClick("ACTIVITY")}
             style={{
-              opacity: isFilterSelected("산책 / 탐방로") ? 1 : 0.5,
+              opacity: isFilterSelected("ACTIVITY") ? 1 : 0.5,
             }}
           >
-            🍃 산책 / 탐방로
+            🏄‍♂️️ 액티비티
           </Menu>
           <Menu
-            onClick={() => handleFilterClick("폭포 / 계곡")}
+            onClick={() => handleFilterClick("THEME_PARK")}
             style={{
-              opacity: isFilterSelected("폭포 / 계곡") ? 1 : 0.5,
+              opacity: isFilterSelected("THEME_PARK") ? 1 : 0.5,
             }}
           >
-            💧 폭포 / 계곡
+            🎟 테마파크
           </Menu>
           <Menu
-            onClick={() => handleFilterClick("드라이브")}
+            onClick={() => handleFilterClick("TASTE")}
             style={{
-              opacity: isFilterSelected("드라이브") ? 1 : 0.5,
+              opacity: isFilterSelected("TASTE") ? 1 : 0.5,
             }}
           >
-            🚘 드라이브
+            ☕ 맛
+          </Menu>
+          <Menu
+            onClick={() => handleFilterClick("RELIGION")}
+            style={{
+              opacity: isFilterSelected("RELIGION") ? 1 : 0.5,
+            }}
+          >
+            🕯️️️ 종교
           </Menu>
         </Box>
       </Container>
     </ModalContainer>
   );
 };
-export default CategoryComponent;
+export default CultureComponent;
 
 const Container = styled.div`
   width: 100%;
