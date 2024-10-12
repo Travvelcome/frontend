@@ -7,16 +7,41 @@ import { ReactComponent as OrangeColor } from "../../assets/stamp/OrangeColor.sv
 import { ReactComponent as OrangeGray } from "../../assets/stamp/OrangeGray.svg";
 import StampInfoModal from "./StampInfoModal";
 import StampVoucherComponent from "./StampVoucherComponent";
+import { getMyPageStamp } from "../../api/MyPage";
 
 const StampPage = () => {
-  const navigate = useNavigate();
-
   // 모달창
   const [isOpen, setIsOpen] = useState(false);
 
-  const LeaveButton = () => {
+  const InfoButton = () => {
     setIsOpen(true);
   };
+
+  // token 가져오기
+  const token = localStorage.getItem("token");
+
+  // 스탬프 개수 조회 api 연동(완료)
+  const [stampCount, setStampCount] = useState<number>(0);
+
+  useEffect(() => {
+    fetchStamp();
+  }, []);
+  const fetchStamp = async () => {
+    try {
+      const response = await getMyPageStamp(token);
+      setStampCount(response.result);
+
+      console.log("스탬프 개수 불러오기 :", stampCount);
+    } catch (error) {
+      console.error("스탬프 개수 불러오기 오류:", error);
+    }
+  };
+
+  // 스탬프 개수에 따라 Bar 길이 조절
+  const getWidthStamp = (stampCount: number) => {
+    return stampCount * 26; // 퍼센트로 변환
+  };
+
   return (
     <Container>
       <TitleBox>
@@ -24,32 +49,21 @@ const StampPage = () => {
       </TitleBox>
       <StampCountBox>
         <Score>
-          1 <span> / 12</span>
+          {stampCount} <span> / 12</span>
         </Score>
-        <Bar1></Bar1>
-        <Bar2></Bar2>
-        <span id="info" onClick={() => LeaveButton()}>
+        <Bar1 />
+        <Bar2 widthPercentage={getWidthStamp(stampCount)} />
+        <span id="info" onClick={() => InfoButton()}>
           <Information />
         </span>
       </StampCountBox>
       <StampBox>
         <StampListBox>
-          <OrangeColor />
-          <OrangeGray />
-          <OrangeGray />
-          <OrangeGray />
-        </StampListBox>
-        <StampListBox>
-          <OrangeGray />
-          <OrangeGray />
-          <OrangeGray />
-          <OrangeGray />
-        </StampListBox>
-        <StampListBox>
-          <OrangeGray />
-          <OrangeGray />
-          <OrangeGray />
-          <OrangeGray />
+          {Array.from({ length: 12 }, (_, index) => (
+            <div key={index}>
+              {index < stampCount ? <OrangeColor /> : <OrangeGray />}
+            </div>
+          ))}
         </StampListBox>
         <span id="back">
           <Background />
@@ -111,9 +125,8 @@ const StampCountBox = styled.div`
   }
 `;
 const Score = styled.div`
-  position: absolute;
-  top: 5px;
-  left: 10px;
+  width: 50px;
+  text-align: center;
   color: #000;
   font-family: "SanTokki";
   font-size: 34px;
@@ -124,11 +137,11 @@ const Score = styled.div`
     margin-left: 10px;
     position: absolute;
     top: 8px;
-    left: 20px;
+    left: 40px;
   }
 `;
 const Bar1 = styled.div`
-  width: 310px;
+  width: 312px;
   height: 13px;
   border-radius: 10px;
   position: absolute;
@@ -137,8 +150,8 @@ const Bar1 = styled.div`
   background-color: #547853;
   opacity: 0.5;
 `;
-const Bar2 = styled.div`
-  width: 8%;
+const Bar2 = styled.div<{ widthPercentage: number }>`
+  width: ${(props) => props.widthPercentage}px;
   height: 13px;
   border-radius: 10px;
   position: absolute;
@@ -162,9 +175,12 @@ const StampBox = styled.div`
   }
 `;
 const StampListBox = styled.div`
-  margin: 20px 0;
-  display: flex;
-  justify-content: space-evenly;
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // 4열로 설정
+  grid-gap: 8px;
+  grid-row-gap: 30px;
+  justify-items: center;
 `;
 
 const VoucherBtn = styled.div`
