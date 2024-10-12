@@ -25,7 +25,9 @@ const TalkingChattingPage = () => {
   const [chatState, setChatState] = useState<any>();
 
   // 관심사 질문 추천 - 카테고리 api 연동
-  const [landmarkList2, setLandmarkList2] = useState<any>([]);
+  const [landmarkList2, setLandmarkList2] = useState<any>(
+    location.state.landmarkList2
+  );
   const [chatList, setChatList] = useState<any>([]);
   const [title, setTitle] = useState("");
 
@@ -86,6 +88,14 @@ const TalkingChattingPage = () => {
     }
   };
 
+  // 대화페이지로 state 이동
+  const handleTalking = async () => {
+    // 대화페이지로 이동시 state 보내기
+    navigate("/frontend/talking/voice", {
+      state: { landmarkList2 },
+    });
+  };
+
   return (
     <Container>
       {!location.state && (
@@ -99,7 +109,7 @@ const TalkingChattingPage = () => {
         <BackBtn onClick={handleBack}>
           <IoIosArrowBack />
         </BackBtn>
-        <Title>{location.state.title}</Title>
+        <Title>{location.state.landmarkList2.title}</Title>
         <hr />
       </TitleBox>
       <ChattingBox>
@@ -107,8 +117,8 @@ const TalkingChattingPage = () => {
           <Day>
             <Date>{location.state.chatList.date.slice(0, 10)}</Date>
             <Me>
-              {location.state.title}의 {location.state.tag.slice(3)}에 대한
-              자세한 설명을 부탁해!
+              {location.state.landmarkList2.title}의{" "}
+              {location.state.tag.slice(3)}에 대한 자세한 설명을 부탁해!
             </Me>
             {alert === false ? (
               <AI>{location.state.chatList.received}</AI>
@@ -142,12 +152,7 @@ const TalkingChattingPage = () => {
             onKeyDown={handleKeyDown} // 엔터키 감지
           />
         </MessageBar>
-        <div
-          id="voice-icon"
-          onClick={() => {
-            window.location.href = "/frontend/talking/voice";
-          }}
-        >
+        <div id="voice-icon" onClick={handleTalking}>
           <TalkingHeadphone />
         </div>
       </MessageBox>

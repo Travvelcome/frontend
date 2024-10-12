@@ -79,9 +79,6 @@ const SearchPage = () => {
   };
 
   // 랜드마크 목록 조회 api 연동(완료)
-  useEffect(() => {
-    fetchLandmarkList();
-  }, []);
 
   const fetchLandmarkList = async () => {
     try {
@@ -110,6 +107,10 @@ const SearchPage = () => {
   useEffect(() => {
     fetchLandmarkTagList(selectedTag);
   }, [selectedTag]);
+
+  useEffect(() => {
+    fetchLandmarkList();
+  }, []);
 
   const fetchLandmarkTagList = async (tag: string) => {
     try {
