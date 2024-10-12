@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import ModalContainer from "../modal/ModalContainer";
+import { postKaKaoUnlink } from "../../api/Auth";
 
 interface ModalProps {
   open: boolean;
@@ -12,8 +13,22 @@ const LeaveModal = ({ onClose }: ModalProps) => {
   const handleClose = () => {
     onClose?.();
   };
-  // 비밀번호 입력
-  const [password, setPassword] = useState<string>("");
+
+  const token = localStorage.getItem("token");
+
+  // 회원탈퇴 api 연동
+  const handelUnlinkBtn = async () => {
+    //로컬 스토리지 클리어
+    localStorage.clear();
+    try {
+      const response = await postKaKaoUnlink(token);
+      console.log("계정탈퇴하기 :", response);
+      window.location.href = "/frontend";
+    } catch (error) {
+      console.error("계정탈퇴하기 오류:", error);
+    }
+  };
+
   return (
     <ModalContainer>
       <Container onClick={onClose}>
@@ -24,13 +39,7 @@ const LeaveModal = ({ onClose }: ModalProps) => {
           <Message>
             탈퇴 버튼 선택 시, 계정은 삭제되며 복구되지 않습니다.
           </Message>
-          <PasswordInput
-            type="password"
-            placeholder="현재 사용중인 비밀번호를 입력해주세요."
-            value={password}
-            onChange={(ev: any) => setPassword(ev.target.value)}
-          />
-          <Leave>탈퇴</Leave>
+          <Leave onClick={handelUnlinkBtn}>탈퇴</Leave>
           <Cancel onClick={handleClose}>취소</Cancel>
         </Box>
       </Container>
@@ -73,19 +82,6 @@ const Message = styled.div`
   margin-bottom: 30px;
   text-align: left;
 `;
-const PasswordInput = styled.input`
-  width: 250px;
-  height: 35px;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  text-align: left;
-
-  &::placeholder {
-    font-family: "JejuGothic", sans-serif;
-    color: #888;
-    opacity: 1;
-  }
-`;
 const Leave = styled.button`
   width: 137px;
   height: 45px;
@@ -97,6 +93,11 @@ const Leave = styled.button`
   color: #fff;
   cursor: pointer;
   margin-right: 5px;
+  &:hover {
+    background-color: rgb(255, 107, 0, 0.8);
+    color: whitesmoke;
+    transform: translateY(-1px);
+  }
 `;
 
 const Cancel = styled.button`
@@ -106,8 +107,13 @@ const Cancel = styled.button`
   font-size: 20px;
   border-radius: 10px;
   border: none;
-  background-color: rgb(255, 107, 0, 0.8);
+  background-color: rgb(255, 107, 0, 0.4);
   color: #fff;
   cursor: pointer;
   margin-left: 5px;
+  &:hover {
+    background-color: rgb(255, 107, 0, 0.8);
+    color: whitesmoke;
+    transform: translateY(-1px);
+  }
 `;

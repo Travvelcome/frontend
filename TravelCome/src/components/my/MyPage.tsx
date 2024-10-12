@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ReactComponent as FrequencyIcon } from "../../assets/common/Stamp.svg";
-import { ReactComponent as Arrow } from "../../assets/common/Arrow.svg";
-import { useNavigate } from "react-router-dom";
+import StampComponent from "../main/StampComponent";
+import { postKaKaoLogout } from "../../api/Auth";
 
 const MyPage = () => {
-  const navigate = useNavigate();
+  // 개인정보 가져오기
   const nickname = localStorage.getItem("nickname");
+  const token = localStorage.getItem("token");
+  const profileImageUrl = localStorage.getItem("profileImageUrl");
+
+  // 로그아웃 api 연동
+  const handelLogoutBtn = async () => {
+    //로컬 스토리지 클리어
+    localStorage.clear();
+    try {
+      const response = await postKaKaoLogout(token);
+      console.log("로그아웃하기 :", response);
+      window.location.href = "/frontend";
+    } catch (error) {
+      console.error("로그아웃하기 오류:", error);
+    }
+  };
 
   return (
     <Container>
@@ -18,30 +32,16 @@ const MyPage = () => {
           id="roadview
           "
         >
-          <img id="images" />
+          {profileImageUrl && (
+            <img id="img" alt="프로필 이미지" src={profileImageUrl} />
+          )}
         </Image>
         <TextBox>
           <BigText>{nickname}</BigText>
           <SmallText>.........</SmallText>
         </TextBox>
       </InfoBox>
-      <FrequencyBox
-        onClick={() => {
-          navigate("/frontend/stamp");
-        }}
-      >
-        <span id="icon">
-          <FrequencyIcon />
-        </span>
-        <Score>
-          1 <span>/ 20</span>
-        </Score>
-        <span id="arrow">
-          <Arrow />
-        </span>
-        <Bar1></Bar1>
-        <Bar2></Bar2>
-      </FrequencyBox>
+      <StampComponent />
       <hr />
       <SettingBox>
         <Title2>
@@ -69,14 +69,7 @@ const MyPage = () => {
         >
           회원 탈퇴
         </Menu>
-        <Menu
-          onClick={() => {
-            localStorage.clear();
-            window.location.href = "/frontend";
-          }}
-        >
-          로그아웃
-        </Menu>
+        <Menu onClick={handelLogoutBtn}>로그아웃</Menu>
       </SettingBox>
     </Container>
   );
@@ -122,6 +115,13 @@ const Image = styled.div`
   height: 88px;
   background-color: #d9d9d9;
   border-radius: 50%;
+
+  #img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 `;
 const TextBox = styled.div`
   width: 60%;
