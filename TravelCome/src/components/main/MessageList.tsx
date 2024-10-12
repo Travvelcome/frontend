@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const MessageList = () => {
-  return <Container>월정리 해수욕장</Container>;
+interface DataItem {
+  landmarkTitle: string;
+}
+
+const MessageList = ({ landmarkTitle }: DataItem) => {
+  return <Container>{landmarkTitle}</Container>;
 };
 export default MessageList;
 
 const Container = styled.div`
-  width: 150px;
+  //width: 150px;
   height: 30px;
   border-radius: 50px;
   line-height: 30px;
@@ -16,7 +20,8 @@ const Container = styled.div`
   font-size: 15px;
   color: #fff;
   background-color: #999;
-  margin: 0 10px;
+  margin: 0 5px;
+  padding: 0 10px;
   display: inline-block;
   cursor: pointer;
 `;

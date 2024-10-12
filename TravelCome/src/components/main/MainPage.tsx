@@ -3,31 +3,34 @@ import styled from "styled-components";
 import MessageList from "./MessageList";
 import RecommendList from "./RecommendList";
 import { ReactComponent as Horse } from "../../assets/main/Horse.svg";
-import { ReactComponent as FrequencyIcon } from "../../assets/common/Stamp.svg";
-import { ReactComponent as Arrow } from "../../assets/common/Arrow.svg";
 import { BiCurrentLocation } from "react-icons/bi";
-import { getLandmarkFind } from "../../api/Landmark";
+import { getLandmarkFind, getLandmarkRecommend } from "../../api/Landmark";
 import EventBanner from "./EventBanner";
 import { useNavigate } from "react-router-dom";
+import { getChatList } from "../../api/Chat";
+import StampComponent from "./StampComponent";
+import myLocation from "../../assets/common/Location.svg";
+import jejuIcon from "../../assets/common/JejuLocation.png";
 
 declare global {
   interface Window {
     kakao: any;
   }
 }
-const MainPage = () => {
-  /*
-  useEffect(() => {
-    let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-    let options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new window.kakao.maps.LatLng(33.4996213, 126.5311884), //지도의 중심좌표.
-      level: 6, //지도의 레벨(확대, 축소 정도)
-    };
 
-    let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-  }, []);
-*/
+interface DataItem {
+  landmarkTitle: string;
+}
+
+interface DataItemRecommend {
+  landmarkId: number;
+  title: string;
+  categories: string[];
+  imageUrl: string;
+  distance: number;
+}
+
+const MainPage = () => {
   const [map, setMap] = useState<any>();
   const [marker, setMarker] = useState<any>();
 
@@ -36,12 +39,29 @@ const MainPage = () => {
     window.kakao.maps.load(() => {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(33.4996213, 126.5311884),
-        level: 6,
+        // 위치 : 성산일출봉 부근
+        center: new window.kakao.maps.LatLng(33.462956, 126.932747),
+        level: 8,
       };
 
+      // 마커 커스텀
+      const myImageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 사이즈
+      const myImageSrc = myLocation; // 마커 이미지 경로 (사용자 설정)
+      const myMarkerImage = new window.kakao.maps.MarkerImage(
+        myImageSrc,
+        myImageSize
+      );
+
+      // 마커 생성
+      const position = new window.kakao.maps.LatLng(33.462956, 126.932747);
+      const newMarker = new window.kakao.maps.Marker({
+        position: position,
+        map: map,
+        image: myMarkerImage, // 마커 이미지 설정
+      });
+
+      setMarker(newMarker);
       setMap(new window.kakao.maps.Map(container, options));
-      setMarker(new window.kakao.maps.Marker());
     });
   }, []);
 
@@ -61,7 +81,7 @@ const MainPage = () => {
   // 3) 정상적으로 현재위치 가져올 경우 실행
   const getPosSuccess = (pos: GeolocationPosition) => {
     // 현재 위치(위도, 경도) 가져온다.
-    var currentPos = new window.kakao.maps.LatLng(
+    const currentPos = new window.kakao.maps.LatLng(
       pos.coords.latitude, // 위도
       pos.coords.longitude // 경도
     );
@@ -74,21 +94,56 @@ const MainPage = () => {
     marker.setMap(map);
   };
 
-  // 랜드마크 발견하기 연동
-  const [landmarkList, setLandmarkList] = useState([]);
+  // 4) 테스트 위한 제주도 위치 설정
+  const getJejuPosBtn = () => {
+    // 제주 위치 마커
+    var jejuPosition = new window.kakao.maps.LatLng(33.462956, 126.932747);
+    // 해당 위치로 이동
+    map.panTo(jejuPosition);
 
-  const handleFindButton = async () => {
+    // 기존 마커를 제거하고 새로운 마커를 넣는다.
+    marker.setMap(null);
+    marker.setPosition(jejuPosition);
+    marker.setMap(map);
+  };
+  //------------------ 지도 -------------------
+
+  // 개인정보 가져오기
+  const nickname = localStorage.getItem("nickname");
+  const token = localStorage.getItem("token");
+  const profileImageUrl = localStorage.getItem("profileImageUrl");
+
+  // 최근 대화 api 연동(완료)
+  const [landmarkTitle, setLandmarkTitle] = useState<DataItem[]>([]);
+
+  const fetchChattingHistory = async () => {
     try {
-      const response = await getLandmarkFind();
-      setLandmarkList(response);
-      console.log("랜드마크 발견하기 :", landmarkList);
+      const response = await getChatList(token);
+      setLandmarkTitle(response);
+      console.log("최근 대화 목록 불러오기 :", response);
     } catch (error) {
-      console.error("랜드마크 발견하기 오류:", error);
+      console.error("최근 대화 목록 불러오기 오류:", error);
     }
   };
 
-  const navigate = useNavigate();
-  const nickname = localStorage.getItem("nickname");
+  // 랜드마크 추천 api 연동(완료)
+  const [landmarkRecommend, setLandmarkRecommend] = useState<
+    DataItemRecommend[]
+  >([]);
+
+  const fetchLandmarkRecommend = async () => {
+    try {
+      const response = await getLandmarkRecommend(126.932747, 33.462956, token);
+      setLandmarkRecommend(response.result);
+      console.log("랜드마크 추천 불러오기 :", response.result);
+    } catch (error) {
+      console.error("랜드마크 추천 불러오기 오류:", error);
+    }
+  };
+  useEffect(() => {
+    fetchChattingHistory();
+    fetchLandmarkRecommend();
+  }, []);
 
   return (
     <Container>
@@ -98,28 +153,40 @@ const MainPage = () => {
           어디로 떠날까요?
         </Title>
         <Frequency>
-          <span>
-            <Horse />
-          </span>
+          {profileImageUrl ? (
+            <img id="img" alt="메인 프로필 이미지" src={profileImageUrl} />
+          ) : (
+            <span>
+              <Horse />
+            </span>
+          )}
         </Frequency>
       </TitleBox>
       <MapBox>
         <Map id="map"></Map>
-        <FindButton onClick={handleFindButton}>발견하기</FindButton>
+        <FindButton>발견하기</FindButton>
         <LocationButton onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
         </LocationButton>
+        <JejuButton onClick={getJejuPosBtn}>
+          <img id="img" alt="제주 아이콘" src={jejuIcon} />
+        </JejuButton>
       </MapBox>
       <MessageBox>
         <Title2>
           <div></div>최근 대화
         </Title2>
-        <More>더보기</More>
+        <More
+          onClick={() => {
+            window.location.href = "/frontend/chatting";
+          }}
+        >
+          더보기
+        </More>
         <MessageListBox>
-          <MessageList />
-          <MessageList />
-          <MessageList />
-          <MessageList />
+          {landmarkTitle.map((request, index) => (
+            <MessageList key={index} landmarkTitle={request.landmarkTitle} />
+          ))}
         </MessageListBox>
       </MessageBox>
       <RecommendBox>
@@ -127,31 +194,28 @@ const MainPage = () => {
           <div></div>
           {nickname}님만을 위한 추천
         </Title2>
-        <More>더보기</More>
+        <More
+          onClick={() => {
+            window.location.href = "/frontend/search";
+          }}
+        >
+          더보기
+        </More>
         <RecommendListBox>
-          <RecommendList />
-          <RecommendList />
-          <RecommendList />
+          {landmarkRecommend.map((request, index) => (
+            <RecommendList
+              key={index}
+              landmarkId={request.landmarkId}
+              title={request.title}
+              categories={request.categories}
+              imageUrl={request.imageUrl}
+              distance={request.distance}
+            />
+          ))}
         </RecommendListBox>
       </RecommendBox>
       <EventBanner />
-      <FrequencyBox
-        onClick={() => {
-          navigate("/frontend/stamp");
-        }}
-      >
-        <span id="icon">
-          <FrequencyIcon />
-        </span>
-        <Score>
-          1 <span>/ 20</span>
-        </Score>
-        <span id="arrow">
-          <Arrow />
-        </span>
-        <Bar1></Bar1>
-        <Bar2></Bar2>
-      </FrequencyBox>
+      <StampComponent />
     </Container>
   );
 };
@@ -182,6 +246,12 @@ const Frequency = styled.div`
   position: absolute;
   right: 0px;
   top: 10px;
+  #img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50px;
+  }
   span {
     width: 60px;
     height: 60px;
@@ -219,7 +289,7 @@ const FindButton = styled.div`
   bottom: 30px;
   left: 32%;
   z-index: 999;
-  cursor: pointer;
+  //cursor: pointer;
 `;
 const LocationButton = styled.div`
   width: 40px;
@@ -235,6 +305,24 @@ const LocationButton = styled.div`
   left: 20px;
   z-index: 999;
   cursor: pointer;
+`;
+const JejuButton = styled.div`
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  line-height: 45px;
+  color: #fdac01;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+  z-index: 999;
+  cursor: pointer;
+  #img {
+    margin-top: 4px;
+  }
 `;
 const MessageBox = styled.div`
   position: relative;
@@ -258,7 +346,8 @@ const Title2 = styled.div`
 `;
 const More = styled.div`
   font-family: "JejuGothic";
-  font-size: 15px;
+  font-size: 13px;
+  color: #87888d;
   position: absolute;
   right: 5px;
   top: 5px;
@@ -289,66 +378,4 @@ const RecommendListBox = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-const Advertise = styled.div`
-  width: 100%;
-  height: 90px;
-  background-color: #f0f0f0;
-  margin: 50px 0;
-  text-align: center;
-  line-height: 90px;
-`;
-const FrequencyBox = styled.div`
-  width: 87%;
-  height: 60px;
-  margin: 0px auto;
-  margin-bottom: 30px;
-  background-color: #fdac01;
-  border-radius: 10px;
-  position: relative;
-  #icon {
-    position: absolute;
-    top: 6px;
-    left: 20px;
-  }
-  #arrow {
-    position: absolute;
-    top: 5.5px;
-    right: 20px;
-    cursor: pointer;
-  }
-`;
-const Score = styled.div`
-  position: absolute;
-  top: 5px;
-  left: 90px;
-  color: #fff;
-  font-family: "SanTokki";
-  font-size: 25px;
-  span {
-    position: absolute;
-    font-size: 15px;
-    width: 40px;
-    top: 8px;
-    left: 20px;
-  }
-`;
-const Bar1 = styled.div`
-  width: 220px;
-  height: 13px;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 10px;
-  left: 90px;
-  background-color: #547853;
-  opacity: 0.5;
-`;
-const Bar2 = styled.div`
-  width: 11px;
-  height: 13px;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 10px;
-  left: 90px;
-  background-color: #547853;
 `;

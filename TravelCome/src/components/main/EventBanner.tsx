@@ -3,6 +3,18 @@ import styled from "styled-components";
 import Slider from "react-slick"; // react-slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import EventComponent from "./EventComponent";
+import { getFestivals } from "../../api/Festival";
+
+interface DataItem {
+  title: string;
+  addr1: string;
+  eventStartDate: string;
+  eventEndDate: string;
+  firstImage: string;
+  tel: string;
+}
+
 const EventBanner = () => {
   // 슬라이더 기본 셋팅
   const settings = {
@@ -14,19 +26,36 @@ const EventBanner = () => {
     arrows: false,
   };
 
+  // 행사 정보 api 연동(완료)
+  const [festivalList, setFestivalList] = useState<DataItem[]>([]);
+
+  useEffect(() => {
+    fetchFestival();
+  }, []);
+  const fetchFestival = async () => {
+    try {
+      const response = await getFestivals();
+      setFestivalList(response.result);
+      console.log("행사정보 불러오기 :", response.result);
+    } catch (error) {
+      console.error("행사정보 오류:", error);
+    }
+  };
+
   return (
     <Container>
       <Slider {...settings}>
-        <EventBox>
-          <MessageBox>
-            <EventTitle>가파도 청보리축제 (4/26~4/28)</EventTitle>
-            <Address>서귀포시 대정읍</Address>
-            <Call>가파리 사무소 064{")"}794-7130 ...</Call>
-          </MessageBox>
-          <ImageBox></ImageBox>
-        </EventBox>
-        <div> 행사 1</div>
-        <div> 행사 2</div>
+        {festivalList.map((request, index) => (
+          <EventComponent
+            key={index}
+            title={request.title}
+            addr1={request.addr1}
+            eventStartDate={request.eventStartDate}
+            eventEndDate={request.eventEndDate}
+            firstImage={request.firstImage}
+            tel={request.tel}
+          />
+        ))}
       </Slider>
     </Container>
   );
@@ -35,44 +64,8 @@ export default EventBanner;
 
 const Container = styled.div`
   width: 100vw;
-  height: 108px;
+  height: 115px;
   background-color: #f0f0f0;
   position: relative;
   margin: 50px 0;
-`;
-const EventBox = styled.div`
-  font-family: "JejuGothic";
-  position: relative;
-  width: 100vw;
-  height: 108px;
-`;
-const MessageBox = styled.div`
-  width: 60%;
-  margin: 15px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-`;
-const EventTitle = styled.div`
-  font-size: 14px;
-  line-height: 30px;
-  color: #000;
-`;
-const Address = styled.div`
-  font-size: 10px;
-  line-height: 20px;
-  color: #474751;
-`;
-const Call = styled.div`
-  font-size: 10px;
-  line-height: 20px;
-  color: #474751;
-`;
-const ImageBox = styled.div`
-  width: 35%;
-  height: 100%;
-  background-color: #e0e0e0;
-  position: absolute;
-  top: 0px;
-  right: 0px;
 `;
