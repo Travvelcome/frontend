@@ -43,7 +43,7 @@ const TalkingVoicePage = () => {
   //playBtn
   const [isPlay, setIsPlay] = useState(true);
   const [me, setMe] = useState(""); // 내 질문 저장(보낼 메세지)
-  const [value, setValue] = useState("..."); // 화면에 보여주는 나의 목소리
+  const [value, setValue] = useState(""); // 화면에 보여주는 나의 목소리
 
   const PlayButton = () => {
     setIsPlay(!isPlay);
@@ -51,7 +51,7 @@ const TalkingVoicePage = () => {
   const StopButton = () => {
     setIsPlay(!isPlay);
     setMe(value);
-    setValue("...");
+    setValue("");
 
     handelPostChat(); // 채팅보내기
     console.log(value);
@@ -95,6 +95,7 @@ const TalkingVoicePage = () => {
   // 상태가 저장되면
   useEffect(() => {
     handleTTSButton();
+    setVoiceAI("");
   }, [voiceAI]);
 
   const handleTTSButton = () => {
@@ -116,15 +117,13 @@ const TalkingVoicePage = () => {
       <IconBox>
         <TalkingIcon id="icon" />
       </IconBox>
-      <ChattingBox>
+      <ChattingBox onClick={handleTTSButton}>
         {postChatList.map((chat, index) => (
           <>
             <Me>{chat.sent}</Me>
             <AI>{chat.received}</AI>
           </>
         ))}
-        <Me>...</Me>
-        <AI onClick={handleTTSButton}>...</AI>
       </ChattingBox>
       <MyVoice>{value}</MyVoice>
       {listening && <LoadingTalking />}
@@ -178,14 +177,17 @@ const IconBox = styled.div`
 const ChattingBox = styled.div`
   font-family: "JejuGothic";
   height: 30%;
-  border: 1px solid #111;
+  //border: 1px solid #111;
   overflow: auto;
   white-space: nowrap;
 `;
 const MyVoice = styled.div`
   width: max-content;
   max-width: 250px;
+  min-width: 100px;
   height: max-content;
+  min-height: 30px;
+  text-align: center;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
@@ -196,6 +198,7 @@ const MyVoice = styled.div`
   border-radius: 30px;
   color: #000;
   white-space: wrap;
+  background-color: rgb(0, 0, 0, 0.1);
 `;
 const AI = styled.div`
   width: max-content;
@@ -227,7 +230,7 @@ const Me = styled.div`
   font-size: 24px;
   line-height: 30px;
   border-radius: 30px;
-  color: #000;
+  color: rgb(0, 0, 0, 0.6);
   white-space: wrap;
 `;
 const MenuBox = styled.div`

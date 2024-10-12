@@ -6,6 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import QuestionList from "./TalkingQuestionList2";
 import { ReactComponent as TalkingHeadphone } from "../../assets/talking/TalkingHeadphone.svg";
 import { getChatList, postChat, postChatTopic } from "../../api/Chat";
+import { IoSearchSharp } from "react-icons/io5";
 
 const TalkingChattingPage = () => {
   const navigate = useNavigate();
@@ -88,6 +89,11 @@ const TalkingChattingPage = () => {
     }
   };
 
+  // 검색아이콘 누를때
+  const searchButton = async () => {
+    handelPostChat(); // 아이콘을 누를 때 검색
+  };
+
   // 대화페이지로 state 이동
   const handleTalking = async () => {
     // 대화페이지로 이동시 state 보내기
@@ -150,7 +156,10 @@ const TalkingChattingPage = () => {
             value={searchKeyword}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown} // 엔터키 감지
-          />
+          />{" "}
+          <div id="search-icon" onClick={searchButton}>
+            <IoSearchSharp size="23" />
+          </div>
         </MessageBar>
         <div id="voice-icon" onClick={handleTalking}>
           <TalkingHeadphone />
@@ -299,6 +308,21 @@ const MessageBar = styled.div`
   border-radius: 30px;
   border: 1px solid #000;
   display: inline-block;
+
+  #search-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+    line-height: 57px;
+    color: #111;
+    cursor: pointer;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 13px;
+  }
 `;
 const MessageInput = styled.input`
   font-family: "JejuGothic";
