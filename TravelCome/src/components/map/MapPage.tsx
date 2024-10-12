@@ -9,6 +9,9 @@ import { IoSearchSharp } from "react-icons/io5";
 import { ReactComponent as Filter } from "../../assets/map/Filter.svg";
 import { useNavigate } from "react-router-dom";
 import MapFilterComponent from "./MapFilterComponent";
+import myLocation from "../../assets/common/Location.svg";
+import jejuIcon from "../../assets/common/JejuLocation.png";
+import { getLandmarkMap } from "../../api/Landmark";
 
 declare global {
   interface Window {
@@ -17,20 +20,47 @@ declare global {
 }
 
 const MapPage = () => {
+  // ---------------- 지도 --------------------
   const [map, setMap] = useState<any>();
   const [marker, setMarker] = useState<any>();
+
+  //지도에 표시할 좌표들
+  const [landmarkMap, setLandmarkMap] = useState<any[]>([]);
 
   // 1) 카카오맵 불러오기
   useEffect(() => {
     window.kakao.maps.load(() => {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(33.4996213, 126.5311884),
-        level: 6,
+        // 위치 : 성산일출봉 부근
+        center: new window.kakao.maps.LatLng(33.462956, 126.932747),
+        level: 8,
       };
 
-      setMap(new window.kakao.maps.Map(container, options));
-      setMarker(new window.kakao.maps.Marker());
+      // 지도 객체 생성
+      const newMap = new window.kakao.maps.Map(container, options);
+      setMap(newMap); // 지도 객체 상태 업데이트
+
+      // 내 위치 마커 커스텀
+      const myImageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 사이즈
+      const myImageSrc = myLocation; // 마커 이미지 경로 (사용자 설정)
+      const myMarkerImage = new window.kakao.maps.MarkerImage(
+        myImageSrc,
+        myImageSize
+      );
+
+      // 내 위치 마커 생성
+      const position = new window.kakao.maps.LatLng(33.462956, 126.932747);
+      const newMarker = new window.kakao.maps.Marker({
+        position: position,
+        map: map,
+        image: myMarkerImage, // 마커 이미지 설정
+      });
+
+      setMarker(newMarker);
+
+      fetchLandmarkMap();
+      markLandmarkMap(newMap);
     });
   }, []);
 
@@ -50,7 +80,7 @@ const MapPage = () => {
   // 3) 정상적으로 현재위치 가져올 경우 실행
   const getPosSuccess = (pos: GeolocationPosition) => {
     // 현재 위치(위도, 경도) 가져온다.
-    var currentPos = new window.kakao.maps.LatLng(
+    const currentPos = new window.kakao.maps.LatLng(
       pos.coords.latitude, // 위도
       pos.coords.longitude // 경도
     );
@@ -63,7 +93,25 @@ const MapPage = () => {
     marker.setMap(map);
   };
 
+  // 4) 테스트 위한 제주도 위치 설정
+  const getJejuPosBtn = () => {
+    // 제주 위치 마커
+    var jejuPosition = new window.kakao.maps.LatLng(33.462956, 126.932747); // 기본위치(성동구청)
+    // 해당 위치로 이동
+    map.panTo(jejuPosition);
+
+    // 기존 마커를 제거하고 새로운 마커를 넣는다.
+    marker.setMap(null);
+    marker.setPosition(jejuPosition);
+    marker.setMap(map);
+  };
+
+  //------------------ 지도 -------------------
+
+  // 토큰
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
+
   const handleClick = (path: string) => {
     navigate(path);
   };
@@ -76,6 +124,47 @@ const MapPage = () => {
 
   // 관심사 필터창 내용 상태 저장
   const [isFilter, setIsFilter] = useState<string>("관심사");
+
+  // 최초(관심사) 지도 랜드마크 조회 api 연동
+  const fetchLandmarkMap = async () => {
+    try {
+      const response = await getLandmarkMap(token);
+      setLandmarkMap(response.result);
+
+      console.log("최초 랜드마크 좌표 불러오기 :", response.result);
+    } catch (error) {
+      console.error("최초 랜드마크 좌표 불러오기 오류:", error);
+    }
+  };
+
+  // 지도에 마커 표시하기
+  const markLandmarkMap = (map: any) => {
+    // 좌표(landmarkMap)를 기반으로 positions 배열 생성
+    var positions = landmarkMap.map((request) => ({
+      latlng: new window.kakao.maps.LatLng(request.mapY, request.mapX),
+    }));
+
+    // 마커 이미지의 이미지 주소
+    var imageSrc =
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+    // positions 배열을 순회하면서 각 위치에 마커 생성
+    for (var i = 0; i < positions.length; i++) {
+      // 마커 이미지 설정
+      var imageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 사이즈
+      var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+
+      // 마커 생성
+      var newMarker = new window.kakao.maps.Marker({
+        map: map, // 마커가 표시될 지도
+        position: positions[i].latlng, // 마커의 위치
+        image: markerImage, // 마커 이미지
+      });
+
+      // 마커를 지도에 표시
+      newMarker.setMap(map);
+    }
+  };
 
   return (
     <Container>
@@ -110,6 +199,9 @@ const MapPage = () => {
         <LocationBtn onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
         </LocationBtn>
+        <JejuBtn onClick={getJejuPosBtn}>
+          <img id="img" alt="제주 아이콘" src={jejuIcon} />
+        </JejuBtn>
         <SearchBtn onClick={() => handleClick("/frontend/search")}>
           <IoSearchSharp id="search" />
         </SearchBtn>
@@ -171,7 +263,7 @@ const BackBtn = styled.div`
   cursor: pointer;
 `;
 const BtnBox = styled.div`
-  width: 180px;
+  width: 220px;
   height: 65px;
   display: flex;
   justify-content: space-evenly;
@@ -179,11 +271,17 @@ const BtnBox = styled.div`
   border-radius: 30px;
   position: absolute;
   top: 85%;
-  left: 30%;
+  left: 25%;
   z-index: 999;
 `;
 
 const LocationBtn = styled.div`
+  font-size: 30px;
+  line-height: 70px;
+  color: #fdac01;
+  cursor: pointer;
+`;
+const JejuBtn = styled.div`
   font-size: 30px;
   line-height: 70px;
   color: #fdac01;
