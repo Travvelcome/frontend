@@ -1,24 +1,47 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const ChattingListComponent = () => {
+interface DataItem {
+  landmarkId: number;
+  landmarkTitle: string;
+  landmarkCategory: string[];
+  landmarkImage: string;
+  received: string;
+  date: string;
+}
+
+const ChattingListComponent = ({
+  landmarkId,
+  landmarkTitle,
+  landmarkCategory,
+  landmarkImage,
+  received,
+  date,
+}: DataItem) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleChattingHistory = async () => {
+    // 해당 대화목록 누르면 chattinghistory페이지로 이동 state와 함께
+    navigate("/frontend/chatting/history", {
+      state: { landmarkId },
+    });
+  };
+
   return (
     <>
-      <Container
-        onClick={() => {
-          window.location.href = "/frontend/chatting/history";
-        }}
-      >
+      <Container onClick={handleChattingHistory}>
         <Image
           id="roadview
           "
         >
-          <img id="images" />
+          <img id="img" alt="최근 대화 목록" src={landmarkImage} />
         </Image>
         <TextBox>
-          <BigText>용두암</BigText>
-          <SmallText>내용</SmallText>
-          <Time>1일전</Time>
+          <BigText>{landmarkTitle}</BigText>
+          <SmallText>{received}</SmallText>
+          <Time>{date.slice(5, 10)}</Time>
         </TextBox>
       </Container>
       <hr />
@@ -40,6 +63,12 @@ const Image = styled.div`
   height: 52px;
   background-color: #d9d9d9;
   border-radius: 50%;
+
+  #img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 `;
 const TextBox = styled.div`
   position: absolute;
@@ -53,9 +82,13 @@ const BigText = styled.div`
   font-size: 15px;
 `;
 const SmallText = styled.div`
-  margin-top: 10px;
+  margin-top: 15px;
   color: #929292;
   font-size: 13px;
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const Time = styled.div`
   position: absolute;

@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const RecentChattingList = () => {
+interface DataItem {
+  landmarkId: number;
+  landmarkTitle: string;
+  landmarkImage: string;
+}
+
+const RecentChattingList = ({
+  landmarkId,
+  landmarkTitle,
+  landmarkImage,
+}: DataItem) => {
   return (
     <Container>
-      <Image></Image>
+      <Image>
+        <img id="img" alt="최근 대화 목록" src={landmarkImage} />
+      </Image>
       <DesciptionBox>
-        <Name>용두암</Name>
+        <Name>{landmarkTitle}</Name>
       </DesciptionBox>
     </Container>
   );
@@ -15,7 +27,7 @@ export default RecentChattingList;
 
 const Container = styled.div`
   width: 112px;
-  height: 120px;
+  height: 130px;
   margin: 10px -10px;
   display: inline-block;
   cursor: pointer;
@@ -29,6 +41,13 @@ const Image = styled.div`
   position: relative;
 
   border: 5px solid #fff;
+
+  #img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+  }
 `;
 const DesciptionBox = styled.div`
   text-align: center;
@@ -36,6 +55,10 @@ const DesciptionBox = styled.div`
   margin-top: 10px;
 `;
 const Name = styled.div`
+  width: 70px;
+  margin: 0 auto;
+  text-align: center;
+  white-space: wrap;
   font-family: "JejuGothic";
   font-size: 15px;
   color: #474751;

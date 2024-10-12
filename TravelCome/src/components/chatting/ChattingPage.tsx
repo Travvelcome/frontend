@@ -4,15 +4,77 @@ import { IoSearchSharp } from "react-icons/io5";
 import { ReactComponent as Down } from "../../assets/common/CategoryDown.svg";
 import ListComponent from "./ChattingListComponent";
 import RecentChattingList from "./RecentChattingList";
+import { getChatList, getChatListSearch, getChatSearch } from "../../api/Chat";
+
+interface DataItem {
+  landmarkId: number;
+  landmarkTitle: string;
+  landmarkCategory: string[];
+  landmarkImage: string;
+  received: string;
+  date: string;
+}
 
 const ChattingPage = () => {
+  // 개인정보 가져오기
+  const nickname = localStorage.getItem("nickname");
+  const token = localStorage.getItem("token");
+  const profileImageUrl = localStorage.getItem("profileImageUrl");
+
+  // 최근 대화 챗봇 목록 api 연동
+  const [landmarkHistory1, setLandmarkHistory1] = useState<DataItem[]>([]);
+  const [landmarkHistory, setLandmarkHistory] = useState<DataItem[]>([]);
+
+  useEffect(() => {
+    fetchLandmarkHistory();
+  }, []);
+
+  const fetchLandmarkHistory = async () => {
+    try {
+      const response = await getChatList(token);
+      setLandmarkHistory1(response);
+      setLandmarkHistory(response);
+      console.log("랜드마크 대화 목록 불러오기 :", response);
+    } catch (error) {
+      console.error("랜드마크 대화 목록 불러오기 오류:", error);
+    }
+  };
+
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = async (e: any) => {
     const keyword = e.target.value;
     setSearchKeyword(keyword);
+
+    try {
+      const response = await getChatListSearch(keyword, token);
+      setLandmarkHistory(response);
+      console.log("챗봇 목록 검색:", response);
+    } catch (error) {
+      console.error("챗봇 목록 검색 오류:", error);
+    }
   };
+
+  // 검색아이콘 누를때
+  const searchButton = async () => {
+    try {
+      const response = await getChatListSearch(searchKeyword, token);
+      setLandmarkHistory(response);
+      console.log("챗봇 목록 검색:", response);
+    } catch (error) {
+      console.error("챗봇 목록 검색 오류:", error);
+    }
+  };
+
+  // 엔터키를 누를때
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      searchButton();
+      setSearchKeyword(""); // input창 비우기
+    }
+  };
+
   return (
     <Container>
       <TitleBox>
@@ -28,11 +90,14 @@ const ChattingPage = () => {
           <div></div>최근 대화
         </Title2>
         <RecentListBox>
-          <RecentChattingList />
-          <RecentChattingList />
-          <RecentChattingList />
-          <RecentChattingList />
-          <RecentChattingList />
+          {landmarkHistory1.map((request, index) => (
+            <RecentChattingList
+              key={index}
+              landmarkId={request.landmarkId}
+              landmarkTitle={request.landmarkTitle}
+              landmarkImage={request.landmarkImage}
+            />
+          ))}
         </RecentListBox>
       </RecentBox>
       <SearchBox>
@@ -43,8 +108,14 @@ const ChattingPage = () => {
             autoFocus
             value={searchKeyword}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
           />
-          <div id="search-icon">
+          <div
+            id="search-icon"
+            onClick={() => {
+              searchButton();
+            }}
+          >
             <IoSearchSharp size="23" />
           </div>
         </SearchBar>
@@ -53,14 +124,17 @@ const ChattingPage = () => {
         <Title2>
           <div></div>대화록
         </Title2>
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
-        <ListComponent />
+        {landmarkHistory.map((request, index) => (
+          <ListComponent
+            key={index}
+            landmarkId={request.landmarkId}
+            landmarkTitle={request.landmarkTitle}
+            landmarkImage={request.landmarkImage}
+            landmarkCategory={request.landmarkCategory}
+            received={request.received}
+            date={request.date}
+          />
+        ))}
       </ListBox>
     </Container>
   );

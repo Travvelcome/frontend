@@ -1,11 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { IoSearchSharp } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
+import { getChatHistory } from "../../api/Chat";
+import ChattingSearchComponent from "./ChattingSearchComponent";
 
 const ChattingHistoryPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 개인정보
+  const token = localStorage.getItem("token");
+
+  // 검색어
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const handleInputChange = (e: any) => {
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
+  };
+
+  // 검색창 api 연동
+  const [isOpen, setIsOpen] = useState(false);
+  const searchOpenButton = () => {
+    setIsOpen(true);
+  };
+  // 검색창 내용 상태 저장
+  const [searchList, setSearchList] = useState<any>([]);
+
+  // 채팅 내역 보여주기 api 연동
+  const { landmarkId } = location.state;
+  const [chatInfoList, setChatInfoList] = useState<any>([]);
+  const [chatList, setChatList] = useState<any>([]);
+
+  const fetchChattingHistory = async () => {
+    try {
+      const response = await getChatHistory(landmarkId, token);
+      setChatInfoList(response);
+      setChatList(response.chatList);
+
+      console.log("채팅 대화 내역 불러오기 :", response);
+      console.log("채팅 대화 내역 불러오기 :", response.chatList);
+    } catch (error) {
+      console.error("채팅 대화 내역 오류:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchChattingHistory();
+  }, []);
 
   return (
     <Container>
@@ -17,41 +61,44 @@ const ChattingHistoryPage = () => {
         >
           <IoIosArrowBack />
         </BackBtn>
-        <Title>용두암</Title>
+        <Title>{chatInfoList.landmarkTitle}</Title>
         <Image
           id="roadview
           "
         >
-          <img id="images" />
+          <img
+            id="img"
+            alt="대화 내역 이미지"
+            src={chatInfoList.landmarkImage}
+          />
         </Image>
         <hr />
       </TitleBox>
       <ChattingBox>
-        <Day>
-          <Date>2024.08.31</Date>
-          <AI>안녕하세요. 무엇이든 대화 나눠요!</AI>
-          <Me>용두암은 어느정도 크기야?</Me>
-          <AI>
-            용두암은 높이 10m로 바위 모습이 용머리와 비슷하여 용두암이라고
-            불려요.
-          </AI>
-        </Day>
-        <Day>
-          <Date>2024.09.07</Date>
-          <AI>안녕하세요. 무엇이든 대화 나눠요!</AI>
-          <Me>용두암은 어느정도 크기야?</Me>
-          <AI>
-            용두암은 높이 10m로 바위 모습이 용머리와 비슷하여 용두암이라고
-            불려요.
-          </AI>
-        </Day>
+        {chatList.map((chat: any, index: any) => (
+          <Day key={index}>
+            <Date>{chat.date.slice(0, 10)}</Date>
+            <Me>{chat.sent}</Me>
+            <AI>{chat.received}</AI>
+          </Day>
+        ))}
       </ChattingBox>
 
-      <SearchBtn>
+      <SearchBtn onClick={searchOpenButton}>
         <div id="search-icon">
           <IoSearchSharp size="23" />
         </div>
       </SearchBtn>
+
+      {isOpen && (
+        <ChattingSearchComponent
+          landmarkId={landmarkId}
+          setChatList={setChatList}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        />
+      )}
     </Container>
   );
 };
@@ -80,7 +127,7 @@ const BackBtn = styled.div`
   cursor: pointer;
 `;
 const Title = styled.div`
-  width: 120px;
+  width: 200px;
   height: 25px;
   line-height: 25px;
   font-size: 24px;
@@ -97,12 +144,27 @@ const Image = styled.div`
   position: absolute;
   top: 17px;
   right: 30px;
+
+   #img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 `;
 const ChattingBox = styled.div`
+  height: 80%;
   font-family: "JejuGothic";
   position: relative;
   padding: 10px;
   //border: 1px solid #111;
+
+  overflow: auto;
+  white-space: nowrap;
+`;
+const Day = styled.div`
+  padding: 15px 0;
+  white-space: wrap;
+  //border: 1px solid #000;
 `;
 const Date = styled.div`
   font-family: "JejuGothic";
@@ -110,10 +172,6 @@ const Date = styled.div`
   color: #87888d;
   position: relative;
   text-align: center;
-`;
-const Day = styled.div`
-  padding: 15px 0;
-  //border: 1px solid #000;
 `;
 const AI = styled.div`
   width: max-content;
@@ -126,6 +184,7 @@ const AI = styled.div`
   padding: 15px 25px;
   font-family: "JejuGothic";
   font-size: 14px;
+  line-height: 20px;
   border-radius: 30px;
   color: #000;
   background-color: rgb(255, 107, 0, 0.4);
@@ -142,6 +201,7 @@ const Me = styled.div`
   padding: 15px 25px;
   font-family: "JejuGothic";
   font-size: 14px;
+  line-height: 20px;
   border-radius: 30px;
   color: #fff;
   background-color: rgb(255, 107, 0, 0.8);
@@ -155,6 +215,8 @@ const SearchBtn = styled.div`
   bottom: 100px;
   right: 20px;
   cursor: pointer;
+
+  background-color: rgb(255, 255, 255, 0.8);
 
   #search-icon {
     color: #111;
