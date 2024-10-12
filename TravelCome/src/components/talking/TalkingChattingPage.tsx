@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { RiHeadphoneFill } from "react-icons/ri";
 import { IoIosArrowBack } from "react-icons/io";
 import QuestionList from "./TalkingQuestionList2";
 import { ReactComponent as TalkingHeadphone } from "../../assets/talking/TalkingHeadphone.svg";
+import { getChatList, postChat, postChatTopic } from "../../api/Chat";
 
 const TalkingChattingPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 개인정보
+  const token = localStorage.getItem("token");
 
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -17,43 +22,126 @@ const TalkingChattingPage = () => {
     setSearchKeyword(keyword);
   };
 
+  const [chatState, setChatState] = useState<any>();
+
+  // 관심사 질문 추천 - 카테고리 api 연동
+  const [landmarkList2, setLandmarkList2] = useState<any>([]);
+  const [chatList, setChatList] = useState<any>([]);
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    fetchChatList();
+  }, []);
+
+  // AI 답변은 조금 늦게 보여주기
+  let [alert, setAlert] = useState(true);
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setAlert(false);
+    }, 2000);
+  });
+
+  const fetchChatList = async () => {
+    if (location.state) {
+      setChatState(location.state);
+      setLandmarkList2(location.state.landmarkList2);
+      if (location.state.chatList) {
+        setChatList(location.state.chatList);
+      }
+    }
+  };
+
+  const handleBack = async () => {
+    // 뒤로가기 해도 state 유지될 수 있게 보내주기
+    navigate("/frontend/talking", {
+      state: { landmarkList2 },
+    });
+  };
+
+  // 챗봇 대화 api 연동
+  const [postChatList, setPostChatList] = useState<any[]>([]); // 여러 메시지를 관리하는 배열로 변경
+  const [date, setDate] = useState("2024-00-00");
+
+  const handelPostChat = async () => {
+    const data = {
+      sent: searchKeyword,
+      landmarkId: landmarkList2.landmarkId,
+    };
+
+    try {
+      const response = await postChat(landmarkList2.landmarkId, token, data);
+      setDate(response.date.slice(0, 10));
+      setPostChatList((prevChatList) => [...prevChatList, response]);
+      console.log("챗봇 대화하기 :", response);
+    } catch (error) {
+      console.error("챗봇 대화하기 오류:", error);
+    }
+  };
+
+  // 엔터키를 누르면 handelPostChat 호출
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handelPostChat(); // 엔터를 누를 때 대화 전송
+      setSearchKeyword(""); // input창 비우기
+    }
+  };
+
   return (
     <Container>
-      <Background>
-        무엇이든 대화 나눠요!
-        <br />
-        질문이 아니어도 괜찮아요.
-      </Background>
+      {!location.state && (
+        <Background>
+          무엇이든 대화 나눠요!
+          <br />
+          질문이 아니어도 괜찮아요.
+        </Background>
+      )}
       <TitleBox>
-        <BackBtn
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
+        <BackBtn onClick={handleBack}>
           <IoIosArrowBack />
         </BackBtn>
-        <Title>용두암</Title>
+        <Title>{location.state.title}</Title>
         <hr />
       </TitleBox>
-      <ChattingBox></ChattingBox>
-      <QuestionBox>
+      <ChattingBox>
+        {location.state.chatList && (
+          <Day>
+            <Date>{location.state.chatList.date.slice(0, 10)}</Date>
+            <Me>
+              {location.state.title}의 {location.state.tag.slice(3)}에 대한
+              자세한 설명을 부탁해!
+            </Me>
+            {alert === false ? (
+              <AI>{location.state.chatList.received}</AI>
+            ) : (
+              <AI>...</AI>
+            )}
+          </Day>
+        )}
+        {/* postChatList를 순회하며 여러 메시지를 렌더링 */}
+        {postChatList.map((chat, index) => (
+          <Day key={index}>
+            <Date>{chat.date.slice(0, 10)}</Date>
+            <Me>{chat.sent}</Me>
+            <AI>{chat.received}</AI>
+          </Day>
+        ))}
+      </ChattingBox>
+      {/*<QuestionBox>
         <QuestionList />
         <QuestionList />
-        <QuestionList />
-        <QuestionList />
-        <QuestionList />
-      </QuestionBox>
-      <SearchBox>
-        <SearchBar>
-          <SearchInput
+      </QuestionBox>*/}
+      <MessageBox>
+        <MessageBar>
+          <MessageInput
             id="input"
             type="text"
             autoFocus
             placeholder="Message"
             value={searchKeyword}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown} // 엔터키 감지
           />
-        </SearchBar>
+        </MessageBar>
         <div
           id="voice-icon"
           onClick={() => {
@@ -62,7 +150,7 @@ const TalkingChattingPage = () => {
         >
           <TalkingHeadphone />
         </div>
-      </SearchBox>
+      </MessageBox>
     </Container>
   );
 };
@@ -101,7 +189,7 @@ const BackBtn = styled.div`
   cursor: pointer;
 `;
 const Title = styled.div`
-  width: 120px;
+  width: 250px;
   height: 25px;
   line-height: 25px;
   font-size: 28px;
@@ -111,10 +199,19 @@ const Title = styled.div`
   padding-bottom: 10px;
 `;
 const ChattingBox = styled.div`
+  height: 80%;
   font-family: "JejuGothic";
   position: relative;
   padding: 10px;
   //border: 1px solid #111;
+
+  overflow: auto;
+  white-space: nowrap;
+`;
+const Day = styled.div`
+  white-space: wrap;
+  padding: 15px 0;
+  //border: 1px solid #000;
 `;
 const Date = styled.div`
   font-family: "JejuGothic";
@@ -122,10 +219,6 @@ const Date = styled.div`
   color: #87888d;
   position: relative;
   text-align: center;
-`;
-const Day = styled.div`
-  padding: 15px 0;
-  //border: 1px solid #000;
 `;
 const AI = styled.div`
   width: max-content;
@@ -138,6 +231,7 @@ const AI = styled.div`
   padding: 15px 25px;
   font-family: "JejuGothic";
   font-size: 14px;
+  line-height: 20px;
   border-radius: 30px;
   color: #000;
   background-color: rgb(255, 107, 0, 0.4);
@@ -154,10 +248,11 @@ const Me = styled.div`
   padding: 15px 25px;
   font-family: "JejuGothic";
   font-size: 14px;
+  line-height: 20px;
   border-radius: 30px;
   color: #fff;
   background-color: rgb(255, 107, 0, 0.8);
-`;
+`; /*
 const QuestionBox = styled.div`
   width: 100vw;
   font-family: "JejuGothic";
@@ -169,9 +264,10 @@ const QuestionBox = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-const SearchBox = styled.div`
+`;*/
+const MessageBox = styled.div`
   width: 100vw;
+  background-color: #fff;
   font-family: "JejuGothic";
   position: fixed;
   bottom: 0px;
@@ -190,7 +286,7 @@ const SearchBox = styled.div`
     margin-left: 10px;
   }
 `;
-const SearchBar = styled.div`
+const MessageBar = styled.div`
   font-family: "JejuGothic";
   position: relative;
   width: 80%;
@@ -199,7 +295,7 @@ const SearchBar = styled.div`
   border: 1px solid #000;
   display: inline-block;
 `;
-const SearchInput = styled.input`
+const MessageInput = styled.input`
   font-family: "JejuGothic";
   width: 70%;
   height: 40px;

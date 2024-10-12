@@ -7,7 +7,7 @@ import { ReactComponent as TalkingVoiceBtn } from "../../assets/talking/TalkingV
 import { ReactComponent as TalkingLock } from "../../assets/talking/TalkingLock.svg";
 import LoadingTalking from "../layout/LoadingTalking";
 import { useSpeechRecognition } from "react-speech-kit";
-//import { getSpeech } from "./utils/getSpeech";
+import { getSpeech } from "./utils/getSpeech";
 
 const TalkingVoicePage = () => {
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ const TalkingVoicePage = () => {
   // TTS -- 모바일에서 안됨...
   const [value2, setValue2] = useState("드라이브 코스로도 유명하다고 해요!");
 
-  /*
   //음성 변환 목소리 preload
   useEffect(() => {
     window.speechSynthesis.getVoices();
@@ -45,11 +44,11 @@ const TalkingVoicePage = () => {
 
   const handleInput = (e) => {
     const { value2 } = e.target;
-    //setValue(value2);
+    setValue(value2);
   };
-*/
+
   const handleButton = () => {
-    //getSpeech(value2);
+    getSpeech(value2);
   };
 
   return (
