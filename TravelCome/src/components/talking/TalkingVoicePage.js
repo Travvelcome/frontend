@@ -51,7 +51,7 @@ const TalkingVoicePage = () => {
   const StopButton = () => {
     setIsPlay(!isPlay);
     setMe(value);
-    setValue("");
+    //setValue("");
 
     handelPostChat(); // 채팅보내기
     console.log(value);
@@ -69,7 +69,7 @@ const TalkingVoicePage = () => {
 
   const handelPostChat = async () => {
     const data = {
-      sent: me, // 보낼 메세지
+      sent: value, // 보낼 메세지
       landmarkId: landmarkList2.landmarkId,
     };
 

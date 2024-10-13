@@ -38,7 +38,7 @@ const MyPage = () => {
         </Image>
         <TextBox>
           <BigText>{nickname}</BigText>
-          <SmallText>.........</SmallText>
+          <SmallText></SmallText>
         </TextBox>
       </InfoBox>
       <StampComponent />
@@ -126,8 +126,8 @@ const Image = styled.div`
 const TextBox = styled.div`
   width: 60%;
   position: absolute;
-  top: 45px;
-  left: 130px;
+  top: 50px;
+  left: 140px;
   //border: 1px solid #111;
 `;
 const BigText = styled.div`
