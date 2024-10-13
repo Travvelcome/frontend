@@ -121,6 +121,13 @@ const MainPage = () => {
       const response = await getChatList(token);
       setLandmarkTitle(response);
       console.log("최근 대화 목록 불러오기 :", response);
+
+      // COMMON500 응답 코드 확인
+      if (response.code === "COMMON500") {
+        // 로컬 스토리지 비우기
+        localStorage.clear();
+        window.location.href = "/frontend";
+      }
     } catch (error) {
       console.error("최근 대화 목록 불러오기 오류:", error);
     }
@@ -136,6 +143,13 @@ const MainPage = () => {
       const response = await getLandmarkRecommend(126.932747, 33.462956, token);
       setLandmarkRecommend(response.result);
       console.log("랜드마크 추천 불러오기 :", response.result);
+
+      // COMMON500 응답 코드 확인
+      if (response.code === "COMMON500") {
+        // 로컬 스토리지 비우기
+        localStorage.clear();
+        window.location.href = "/frontend";
+      }
     } catch (error) {
       console.error("랜드마크 추천 불러오기 오류:", error);
     }
