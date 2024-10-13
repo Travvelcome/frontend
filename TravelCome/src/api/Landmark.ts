@@ -109,6 +109,23 @@ export const getLandmarkMap = async (userId: string | null) => {
     throw error;
   }
 };
+export const getLandmarkMapCategory = async (
+  category: string,
+  userId: string | null
+) => {
+  console.log("카테고리별 지도 랜드마크 조회:");
+  try {
+    const res = await request.get({
+      url: `/landmarks/map/category?category=${category}&userId=${userId}`,
+      params: {},
+    });
+    console.log("카테고리별 지도 랜드마크 조회 성공", res);
+    return res;
+  } catch (error) {
+    console.error("카테고리별 지도 랜드마크 조회 오류:", error);
+    throw error;
+  }
+};
 export const getLandmarkClose = async (mapX: number, mapY: number) => {
   console.log("위치기반 랜드마크 조회:");
   try {

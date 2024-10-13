@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import MapFilterComponent from "./MapFilterComponent";
 import myLocation from "../../assets/common/Location.svg";
 import jejuIcon from "../../assets/common/JejuLocation.png";
-import { getLandmarkMap } from "../../api/Landmark";
+import { getLandmarkMap, getLandmarkMapCategory } from "../../api/Landmark";
 
 declare global {
   interface Window {
@@ -38,8 +38,9 @@ const MapPage = () => {
       };
 
       // 지도 객체 생성
-      const newMap = new window.kakao.maps.Map(container, options);
-      setMap(newMap); // 지도 객체 상태 업데이트
+      //const newMap = new window.kakao.maps.Map(container, options);
+      //setMap(newMap); // 지도 객체 상태 업데이트
+      setMap(new window.kakao.maps.Map(container, options));
 
       // 내 위치 마커 커스텀
       const myImageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 사이즈
@@ -60,7 +61,7 @@ const MapPage = () => {
       setMarker(newMarker);
 
       fetchLandmarkMap();
-      markLandmarkMap(newMap);
+      //markLandmarkMap(map);
     });
   }, []);
 
@@ -120,6 +121,7 @@ const MapPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const FilterButton = () => {
     setIsOpen(true);
+    //markLandmarkMap(map);
   };
 
   // 관심사 필터창 내용 상태 저장
@@ -134,6 +136,26 @@ const MapPage = () => {
       console.log("최초 랜드마크 좌표 불러오기 :", response.result);
     } catch (error) {
       console.error("최초 랜드마크 좌표 불러오기 오류:", error);
+    }
+  };
+
+  // 카테고리별 지도 랜드마크 조회 api 연동
+  const handleLandmarkMapCategory = async () => {
+    const a =
+      isFilter === "자연"
+        ? "nature"
+        : isFilter === "지식"
+        ? "knowledge"
+        : isFilter === "문화"
+        ? "culture"
+        : "nature";
+    try {
+      const response = await getLandmarkMapCategory(a, token);
+      setLandmarkMap(response.result);
+
+      console.log("카테고리별 랜드마크 좌표 불러오기 :", response.result);
+    } catch (error) {
+      console.error("카테고리별 랜드마크 좌표 불러오기 오류:", error);
     }
   };
 
@@ -165,6 +187,11 @@ const MapPage = () => {
       newMarker.setMap(map);
     }
   };
+
+  useEffect(() => {
+    handleLandmarkMapCategory();
+    markLandmarkMap(map);
+  }, [isOpen]);
 
   return (
     <Container>
@@ -209,6 +236,7 @@ const MapPage = () => {
       {isOpen && (
         <MapFilterComponent
           setIsFilter={setIsFilter}
+          setLandmarkMap={setLandmarkMap}
           onClose={() => {
             setIsOpen(false);
           }}

@@ -1,20 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ModalContainer from "../modal/ModalContainer";
 import { ReactComponent as Filter } from "../../assets/map/Filter.svg";
+import { getLandmarkMapCategory } from "../../api/Landmark";
 
 interface ModalProps {
   onClose: () => void;
   setIsFilter: (data: string) => void;
+  setLandmarkMap: (data: string[]) => void;
 }
 
-const MapFilterComponent = ({ onClose, setIsFilter }: ModalProps) => {
+const MapFilterComponent = ({
+  onClose,
+  setIsFilter,
+  setLandmarkMap,
+}: ModalProps) => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   // 관심사 필터창 닫기
   const handleClose = () => {
     onClose?.();
+  };
+
+  //카테고리별 지도 랜드마크 조회 api 연동
+  const [landmarkMapCategory, setLandmarkMapCategory] = useState<any[]>([]);
+
+  //const [isCategory, setIsCategory] = useState<string>("");
+
+  const handleLandmarkMapCategory = async (category: string) => {
+    try {
+      const response = await getLandmarkMapCategory(category, token);
+      setLandmarkMapCategory(response.result);
+
+      console.log("카테고리별 랜드마크 좌표 불러오기 :", response.result);
+    } catch (error) {
+      console.error("카테고리별 랜드마크 좌표 불러오기 오류:", error);
+    }
   };
 
   return (
@@ -38,6 +61,8 @@ const MapFilterComponent = ({ onClose, setIsFilter }: ModalProps) => {
           <Menu
             onClick={() => {
               setIsFilter("자연");
+              setLandmarkMap(landmarkMapCategory);
+              handleLandmarkMapCategory("nature");
               onClose?.();
             }}
           >
@@ -46,6 +71,8 @@ const MapFilterComponent = ({ onClose, setIsFilter }: ModalProps) => {
           <Menu
             onClick={() => {
               setIsFilter("지식");
+              setLandmarkMap(landmarkMapCategory);
+              handleLandmarkMapCategory("knowledge");
               onClose?.();
             }}
           >
@@ -54,6 +81,8 @@ const MapFilterComponent = ({ onClose, setIsFilter }: ModalProps) => {
           <Menu
             onClick={() => {
               setIsFilter("문화");
+              setLandmarkMap(landmarkMapCategory);
+              handleLandmarkMapCategory("culture");
               onClose?.();
             }}
           >
