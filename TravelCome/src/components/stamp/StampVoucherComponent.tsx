@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const StampVoucherComponent = () => {
+interface DataItem {
+  title: string;
+  text: string;
+  img: any;
+}
+const StampVoucherComponent = ({ title, text, img }: DataItem) => {
   return (
     <>
       <Container>
@@ -9,11 +14,11 @@ const StampVoucherComponent = () => {
           id="roadview
           "
         >
-          <img id="images" />
+          <img id="images" src={img} />
         </Image>
         <TextBox>
-          <BigText>**식당</BigText>
-          <SmallText>제철메뉴 주문시 10% 할인 </SmallText>
+          <BigText>{title}</BigText>
+          <SmallText>{text}</SmallText>
           <ChoiceBtn>선택</ChoiceBtn>
         </TextBox>
       </Container>

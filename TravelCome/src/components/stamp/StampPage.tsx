@@ -8,6 +8,9 @@ import { ReactComponent as OrangeGray } from "../../assets/stamp/OrangeGray.svg"
 import StampInfoModal from "./StampInfoModal";
 import StampVoucherComponent from "./StampVoucherComponent";
 import { getMyPageStamp } from "../../api/MyPage";
+import Img1 from "../../assets/stamp/Voucher1.png";
+import Img2 from "../../assets/stamp/Voucher2.png";
+import Img3 from "../../assets/stamp/Voucher3.png";
 
 const StampPage = () => {
   // 모달창
@@ -69,16 +72,34 @@ const StampPage = () => {
           <Background />
         </span>
       </StampBox>
-      <VoucherBtn>내 바우처 확인</VoucherBtn>
+      <VoucherBtn
+        style={{
+          backgroundColor: stampCount >= 12 ? "#547853" : "#87888d",
+        }}
+      >
+        내 바우처 확인
+      </VoucherBtn>
       <VoucherBox>
         <TapBox>
           <VoucherTap1>선택 가능한 바우처</VoucherTap1>
           <VoucherTap2>이달의 프로모션</VoucherTap2>
         </TapBox>
         <VoucherListBox>
-          <StampVoucherComponent />
-          <StampVoucherComponent />
-          <StampVoucherComponent />
+          <StampVoucherComponent
+            title="**식당"
+            text="제철메뉴 주문시 10% 할인"
+            img={Img1}
+          />
+          <StampVoucherComponent
+            title="**스테이"
+            text="숙박권 5% 할인"
+            img={Img2}
+          />
+          <StampVoucherComponent
+            title="**농장"
+            text="유자 디저트 만들기 체험 10% 할인"
+            img={Img3}
+          />
         </VoucherListBox>
       </VoucherBox>
       {isOpen && (
