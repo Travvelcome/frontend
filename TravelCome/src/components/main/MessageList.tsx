@@ -6,7 +6,15 @@ interface DataItem {
 }
 
 const MessageList = ({ landmarkTitle }: DataItem) => {
-  return <Container>{landmarkTitle}</Container>;
+  return (
+    <Container
+      onClick={() => {
+        window.location.href = "/frontend/chatting";
+      }}
+    >
+      {landmarkTitle}
+    </Container>
+  );
 };
 export default MessageList;
 

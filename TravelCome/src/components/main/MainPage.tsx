@@ -6,7 +6,7 @@ import { ReactComponent as Horse } from "../../assets/main/Horse.svg";
 import { BiCurrentLocation } from "react-icons/bi";
 import { getLandmarkFind, getLandmarkRecommend } from "../../api/Landmark";
 import EventBanner from "./EventBanner";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { getChatList } from "../../api/Chat";
 import StampComponent from "./StampComponent";
 import myLocation from "../../assets/common/Location.svg";

@@ -41,7 +41,11 @@ const RecommendList = ({
   distance,
 }: DataItem) => {
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        window.location.href = "/frontend/search";
+      }}
+    >
       <Image>
         <img id="img" alt="추천 이미지" src={imageUrl} />
         <CategoryBox>
