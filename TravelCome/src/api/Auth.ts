@@ -17,7 +17,7 @@ export const getKakaoLogin = async (code: string) => {
 export const postKaKaoUnlink = async (accessToken: string | null) => {
   try {
     const res = await request.post({
-      url: `/unlink/accessToken=${accessToken}`,
+      url: `/unlink?accessToken=${accessToken}`,
       params: {},
     });
     console.log("카카오 계정탈퇴 완료", res);
@@ -31,7 +31,7 @@ export const postKaKaoUnlink = async (accessToken: string | null) => {
 export const postKaKaoLogout = async (accessToken: string | null) => {
   try {
     const res = await request.post({
-      url: `/logout/accessToken=${accessToken}`,
+      url: `/logout?accessToken=${accessToken}`,
       params: {},
     });
     console.log("카카오 로그아웃 완료", res);
