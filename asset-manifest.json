@@ -1,14 +1,17 @@
 {
   "files": {
     "main.css": "/frontend/static/css/main.2b078907.css",
-    "main.js": "/frontend/static/js/main.e1299abf.js",
+    "main.js": "/frontend/static/js/main.08557885.js",
     "static/js/453.ed3810f9.chunk.js": "/frontend/static/js/453.ed3810f9.chunk.js",
     "static/media/JejuGothic.ttf": "/frontend/static/media/JejuGothic.5ab8dde3b67410fcb5f4.ttf",
     "static/media/HSSanTokki.ttf": "/frontend/static/media/HSSanTokki.b6254f8942b481e41ee0.ttf",
+    "static/media/Voucher1.png": "/frontend/static/media/Voucher1.edea1170dd9f5f347dac.png",
+    "static/media/Voucher3.png": "/frontend/static/media/Voucher3.7a7f1e99be02f6dbe9ca.png",
     "static/media/Onboarding2.svg": "/frontend/static/media/Onboarding2.fa955fcc29556a006ed5d18f4c788ce0.svg",
     "static/media/Culture2.svg": "/frontend/static/media/Culture2.12aac52830da32b684af137627c41e9e.svg",
     "static/media/Culture.svg": "/frontend/static/media/Culture.0cbed37e85faaf3f4543fcec9ea3c415.svg",
     "static/media/TalkingClose.svg": "/frontend/static/media/TalkingClose.74b6532301b7f3930d22807f9829b577.svg",
+    "static/media/Voucher2.png": "/frontend/static/media/Voucher2.a82a4b9d3e4f6a74691b.png",
     "static/media/Onboarding1.svg": "/frontend/static/media/Onboarding1.b1cce814413a552d0037acf795b98894.svg",
     "static/media/ModalCalendar.svg": "/frontend/static/media/ModalCalendar.ca16fde6bb6e16dfb79608626a052a62.svg",
     "static/media/Background.svg": "/frontend/static/media/Background.dd388c8517daeb41df6e592dbc8e1a76.svg",
@@ -47,11 +50,11 @@
     "static/media/CategoryDown.svg": "/frontend/static/media/CategoryDown.882e7f579ea03f0bd0f0dc05083b6342.svg",
     "static/media/CategoryUp.svg": "/frontend/static/media/CategoryUp.62ce06015c440079a168a8d209886a40.svg",
     "main.2b078907.css.map": "/frontend/static/css/main.2b078907.css.map",
-    "main.e1299abf.js.map": "/frontend/static/js/main.e1299abf.js.map",
+    "main.08557885.js.map": "/frontend/static/js/main.08557885.js.map",
     "453.ed3810f9.chunk.js.map": "/frontend/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2b078907.css",
-    "static/js/main.e1299abf.js"
+    "static/js/main.08557885.js"
   ]
 }
