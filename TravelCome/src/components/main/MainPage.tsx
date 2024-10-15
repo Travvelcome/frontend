@@ -4,7 +4,11 @@ import MessageList from "./MessageList";
 import RecommendList from "./RecommendList";
 import { ReactComponent as Horse } from "../../assets/main/Horse.svg";
 import { BiCurrentLocation } from "react-icons/bi";
-import { getLandmarkFind, getLandmarkRecommend } from "../../api/Landmark";
+import {
+  getLandmarkFind,
+  getLandmarkMap,
+  getLandmarkRecommend,
+} from "../../api/Landmark";
 import EventBanner from "./EventBanner";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getChatList } from "../../api/Chat";
@@ -44,7 +48,12 @@ const MainPage = () => {
         level: 8,
       };
 
-      // 마커 커스텀
+      // 지도 객체 생성
+      //const newMap = new window.kakao.maps.Map(container, options);
+      //setMap(newMap); // 지도 객체 상태 업데이트
+      setMap(new window.kakao.maps.Map(container, options));
+
+      // 내 위치 마커 커스텀
       const myImageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 사이즈
       const myImageSrc = myLocation; // 마커 이미지 경로 (사용자 설정)
       const myMarkerImage = new window.kakao.maps.MarkerImage(
@@ -52,7 +61,7 @@ const MainPage = () => {
         myImageSize
       );
 
-      // 마커 생성
+      // 내 위치 마커 생성
       const position = new window.kakao.maps.LatLng(33.462956, 126.932747);
       const newMarker = new window.kakao.maps.Marker({
         position: position,
@@ -61,7 +70,9 @@ const MainPage = () => {
       });
 
       setMarker(newMarker);
-      setMap(new window.kakao.maps.Map(container, options));
+
+      fetchLandmarkMap();
+      //markLandmarkMap(map);
     });
   }, []);
 
@@ -119,7 +130,7 @@ const MainPage = () => {
   const fetchChattingHistory = async () => {
     try {
       const response = await getChatList(token);
-      setLandmarkTitle(response);
+      //setLandmarkTitle(response);
       console.log("최근 대화 목록 불러오기 :", response);
 
       // COMMON500 응답 코드 확인
@@ -154,9 +165,56 @@ const MainPage = () => {
       console.error("랜드마크 추천 불러오기 오류:", error);
     }
   };
+
+  // 지도 좌표
+  //지도에 표시할 좌표들
+  const [landmarkMap, setLandmarkMap] = useState<any[]>([]);
+
+  // 최초(관심사) 지도 랜드마크 조회 api 연동
+  const fetchLandmarkMap = async () => {
+    try {
+      const response = await getLandmarkMap(token);
+      setLandmarkMap(response.result);
+
+      console.log("최초 랜드마크 좌표 불러오기 :", response.result);
+    } catch (error) {
+      console.error("최초 랜드마크 좌표 불러오기 오류:", error);
+    }
+  };
+
+  // 지도에 마커 표시하기
+  const markLandmarkMap = (map: any) => {
+    // 좌표(landmarkMap)를 기반으로 positions 배열 생성
+    var positions = landmarkMap.map((request) => ({
+      latlng: new window.kakao.maps.LatLng(request.mapY, request.mapX),
+    }));
+
+    // 마커 이미지의 이미지 주소
+    var imageSrc =
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+    // positions 배열을 순회하면서 각 위치에 마커 생성
+    for (var i = 0; i < positions.length; i++) {
+      // 마커 이미지 설정
+      var imageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 사이즈
+      var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+
+      // 마커 생성
+      var newMarker = new window.kakao.maps.Marker({
+        map: map, // 마커가 표시될 지도
+        position: positions[i].latlng, // 마커의 위치
+        image: markerImage, // 마커 이미지
+      });
+
+      // 마커를 지도에 표시
+      newMarker.setMap(map);
+    }
+  };
+
   useEffect(() => {
     fetchChattingHistory();
     fetchLandmarkRecommend();
+    markLandmarkMap(map);
   }, []);
 
   return (
@@ -178,11 +236,22 @@ const MainPage = () => {
       </TitleBox>
       <MapBox>
         <Map id="map"></Map>
-        <FindButton>발견하기</FindButton>
+        <FindButton
+          onClick={() => {
+            window.location.href = "/frontend/search";
+          }}
+        >
+          발견하기
+        </FindButton>
         <LocationButton onClick={getCurrentPosBtn}>
           <BiCurrentLocation />
         </LocationButton>
-        <JejuButton onClick={getJejuPosBtn}>
+        <JejuButton
+          onClick={() => {
+            getJejuPosBtn();
+            fetchLandmarkMap();
+          }}
+        >
           <img id="img" alt="제주 아이콘" src={jejuIcon} />
         </JejuButton>
       </MapBox>
@@ -303,7 +372,12 @@ const FindButton = styled.div`
   bottom: 30px;
   left: 32%;
   z-index: 999;
-  //cursor: pointer;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
 `;
 const LocationButton = styled.div`
   width: 40px;
