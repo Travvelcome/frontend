@@ -130,7 +130,7 @@ const MainPage = () => {
   const fetchChattingHistory = async () => {
     try {
       const response = await getChatList(token);
-      //setLandmarkTitle(response);
+      setLandmarkTitle(response);
       console.log("최근 대화 목록 불러오기 :", response);
 
       // COMMON500 응답 코드 확인
